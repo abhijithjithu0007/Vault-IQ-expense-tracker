@@ -1,4 +1,5 @@
 import { Addnew } from "./add-new";
+import { ChartRound } from "./ChartRound";
 
 const Dashboard = () => {
   return (
@@ -27,9 +28,6 @@ const Dashboard = () => {
         <div className="bg-white p-4 rounded-lg shadow-md">
           <div className="flex justify-around mt-4">
             <div className="text-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                +{" "}
-              </div>
               <p className="mt-2 text-sm">
                 {" "}
                 <Addnew />
@@ -81,12 +79,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Right Side (Chart area) */}
       <div className="flex-2 bg-gray-200 p-6 w-full">
-        {/* Placeholder for Charts */}
         <div className="h-full bg-gray-300 rounded-lg shadow-md">
-          {/* Add your chart component or code here */}
-          <h2 className="text-lg font-bold text-center pt-6">Charts Area</h2>
+          <ChartRound />
         </div>
       </div>
     </div>

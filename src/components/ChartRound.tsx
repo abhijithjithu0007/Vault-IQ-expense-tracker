@@ -48,10 +48,7 @@ export const ChartRound: React.FC = () => {
   };
 
   return (
-    <div className="w-80 h-80 mx-auto bg-white p-4 rounded-lg shadow-md">
-      <h2 className="text-center text-lg font-semibold text-gray-700 mb-4">
-        Financial Chart
-      </h2>
+    <div className="w-72 h-72 mx-auto bg-white p-4 rounded-lg shadow-md">
       <Doughnut data={data} options={options} />
     </div>
   );
