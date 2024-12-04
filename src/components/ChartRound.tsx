@@ -49,9 +49,9 @@ export const ChartRound = () => {
 
   return (
     <div className="flex justify-center mt-4">
-      <div className="bg-gray-800 text-gray-500 rounded shadow-xl py-3 px-5 w-full sm:w-2/3 md:w-1/2 lg:w-full">
+      <div className="bg-white text-gray-800 rounded shadow-xl py-3 px-5 w-full sm:w-2/3 md:w-1/2 lg:w-full">
         <div className="flex w-full mb-2">
-          <h3 className="text-md font-semibold leading-tight flex-1 text-white">
+          <h3 className="text-md font-semibold leading-tight flex-1 text-gray-800">
             TOTAL SESSIONS
           </h3>
         </div>
@@ -59,7 +59,7 @@ export const ChartRound = () => {
         {/* Total Count */}
         <div className="pb-2">
           <h4
-            className="text-xl lg:text-2xl text-white font-semibold leading-tight inline-block"
+            className="text-xl lg:text-2xl text-gray-800 font-semibold leading-tight inline-block"
             ref={totalRef}
           >
             0
@@ -68,7 +68,7 @@ export const ChartRound = () => {
 
         {/* Progress Bar */}
         <div className="pb-1">
-          <div className="overflow-hidden rounded-full h-2 bg-gray-800 flex">
+          <div className="overflow-hidden rounded-full h-2 bg-gray-200 flex">
             {cardData.sessions.map((session, index) => (
               <div
                 key={index}
@@ -85,7 +85,7 @@ export const ChartRound = () => {
             <div
               key={index}
               className={`w-1/3 px-4 ${
-                index !== 0 ? "border-l border-gray-700" : ""
+                index !== 0 ? "border-l border-gray-300" : ""
               }`}
             >
               <div className="text-sm">
@@ -94,7 +94,7 @@ export const ChartRound = () => {
                 ></span>
                 <span className="align-middle">{session.label}</span>
               </div>
-              <div className="font-medium text-lg text-white">
+              <div className="font-medium text-lg text-gray-800">
                 <span ref={(el) => (sessionRefs.current[index] = el)}>0</span>%
               </div>
             </div>

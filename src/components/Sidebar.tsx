@@ -34,10 +34,7 @@ export const Sidebar = () => {
             <RiArrowLeftRightLine className="w-6 h-6 text-gray-600" />{" "}
           </a>
         </div>
-        <a
-          className="flex items-center justify-center w-16 h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300"
-          href="#"
-        >
+        <a className="flex items-center justify-center w-16 h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300">
           <Logout />
         </a>
       </div>

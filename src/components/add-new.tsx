@@ -36,7 +36,7 @@ export function Addnew() {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Name
+              Transaction
             </Label>
             <Select>
               <SelectTrigger className="w-[275px]">
@@ -51,10 +51,27 @@ export function Addnew() {
             </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="reason" className="text-right">
-              Enter reason
+            <Label htmlFor="name" className="text-right">
+              Reason
             </Label>
-            <Input id="text" className="col-span-3" />
+            <Select>
+              <SelectTrigger className="w-[275px]">
+                <SelectValue placeholder="Select a transaction" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Credit">Bus</SelectItem>
+                  <SelectItem value="Car">Car</SelectItem>
+                  <SelectItem value="Food">Food</SelectItem>
+                  <SelectItem value="Gas">Gas</SelectItem>
+                  <SelectItem value="Groceries">Groceries</SelectItem>
+                  <SelectItem value="Housing">Housing</SelectItem>
+                  <SelectItem value="Medical">Medical</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                  <SelectItem value="Personal">Personal</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="number" className="text-right">

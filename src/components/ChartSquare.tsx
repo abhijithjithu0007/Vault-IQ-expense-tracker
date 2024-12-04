@@ -94,14 +94,14 @@ const IncomeChart: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-gray-500 rounded shadow-xl py-3 px-4 w-full lg:w-3/4">
+    <div className="bg-white text-gray-800 rounded shadow-xl py-3 px-4 w-full lg:w-3/4">
       <div className="flex flex-wrap items-end justify-between mb-2">
-        <h3 className="text-sm font-semibold leading-tight text-white">
+        <h3 className="text-sm font-semibold leading-tight text-gray-900">
           Income
         </h3>
         <div className="relative">
           <button
-            className="text-xs hover:text-gray-300 h-5 focus:outline-none"
+            className="text-xs hover:text-gray-600 h-5 focus:outline-none"
             onClick={() =>
               setSelectedOption((prev) => (prev + 1) % options.length)
             }
@@ -112,7 +112,7 @@ const IncomeChart: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-wrap items-end mb-2">
-        <h4 className="text-lg lg:text-xl text-white font-semibold leading-tight inline-block mr-2">
+        <h4 className="text-lg lg:text-xl text-gray-900 font-semibold leading-tight inline-block mr-2">
           $
           {chartData
             ? chartData[options[selectedOption].value].total.toLocaleString()
@@ -121,8 +121,8 @@ const IncomeChart: React.FC = () => {
         <span
           className={`inline-block ${
             chartData && chartData[options[selectedOption].value].upDown < 0
-              ? "text-red-500"
-              : "text-green-500"
+              ? "text-red-600"
+              : "text-green-600"
           } text-xs`}
         >
           {chartData && chartData[options[selectedOption].value].upDown < 0
