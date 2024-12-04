@@ -18,20 +18,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function Addnew() {
+export function UpdateTrans() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="rounded-full p-4 flex items-center justify-center"
-        >
-          + New
-        </Button>
+        <Button variant="ghost">Edit</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add new transaction</DialogTitle>
+          <DialogTitle>Update transaction</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

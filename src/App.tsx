@@ -1,9 +1,11 @@
-import Dashboard from "./components/DashBoard";
+import { Sidebar } from "./components/Sidebar";
 
 function App() {
   return (
     <>
-      <Dashboard />
+      <div className="flex w-full">
+        <Sidebar />
+      </div>
     </>
   );
 }
