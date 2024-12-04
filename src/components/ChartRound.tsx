@@ -1,55 +1,106 @@
-import React from "react";
-import { Doughnut } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  ChartOptions,
-} from "chart.js";
+import { useEffect, useRef } from "react";
+import { CountUp } from "countup.js";
 
-// Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
+export const ChartRound = () => {
+  const totalRef = useRef(null);
+  const sessionRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
-export const ChartRound: React.FC = () => {
-  // Define data for the chart
-  const data = {
-    labels: ["Revenue", "Expenses", "Savings"],
-    datasets: [
+  const cardData = {
+    sessions: [
       {
-        label: "Financial Distribution",
-        data: [300, 200, 100], // Dummy values
-        backgroundColor: ["#4CAF50", "#F44336", "#2196F3"], // Colors for segments
-        borderWidth: 1,
+        label: "Phone",
+        size: 60,
+        color: "bg-indigo-600",
+      },
+      {
+        label: "Tablet",
+        size: 30,
+        color: "bg-indigo-400",
+      },
+      {
+        label: "Desktop",
+        size: 10,
+        color: "bg-indigo-200",
       },
     ],
   };
 
-  // Define options for the chart
-  const options: ChartOptions<"doughnut"> = {
-    plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          font: {
-            size: 14,
-          },
-        },
-      },
-      tooltip: {
-        callbacks: {
-          label: function (tooltipItem) {
-            return `${tooltipItem.label}: ${tooltipItem.raw}`;
-          },
-        },
-      },
-    },
-    cutout: "70%", // Makes the chart look like a donut
-  };
+  useEffect(() => {
+    if (totalRef.current) {
+      const totalCountUp = new CountUp(totalRef.current, 11602, {
+        duration: 0.8,
+      });
+      totalCountUp.start();
+    }
+
+    cardData.sessions.forEach((session, index) => {
+      if (sessionRefs.current[index]) {
+        const sessionCountUp = new CountUp(
+          sessionRefs.current[index]!,
+          session.size,
+          {
+            duration: 1.6,
+          }
+        );
+        sessionCountUp.start();
+      }
+    });
+  }, []);
 
   return (
-    <div className="w-72 h-72 mx-auto bg-white p-4 rounded-lg shadow-md">
-      <Doughnut data={data} options={options} />
+    <div className="flex justify-center mt-4">
+      <div className="bg-gray-800 text-gray-500 rounded shadow-xl py-3 px-5 w-full sm:w-2/3 md:w-1/2 lg:w-full">
+        <div className="flex w-full mb-2">
+          <h3 className="text-md font-semibold leading-tight flex-1 text-white">
+            TOTAL SESSIONS
+          </h3>
+        </div>
+
+        {/* Total Count */}
+        <div className="pb-2">
+          <h4
+            className="text-xl lg:text-2xl text-white font-semibold leading-tight inline-block"
+            ref={totalRef}
+          >
+            0
+          </h4>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="pb-1">
+          <div className="overflow-hidden rounded-full h-2 bg-gray-800 flex">
+            {cardData.sessions.map((session, index) => (
+              <div
+                key={index}
+                className={`h-full ${session.color}`}
+                style={{ width: `${session.size}%` }}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Session Details */}
+        <div className="flex">
+          {cardData.sessions.map((session, index) => (
+            <div
+              key={index}
+              className={`w-1/3 px-4 ${
+                index !== 0 ? "border-l border-gray-700" : ""
+              }`}
+            >
+              <div className="text-sm">
+                <span
+                  className={`inline-block w-2 h-2 rounded-full mr-1 align-middle ${session.color}`}
+                ></span>
+                <span className="align-middle">{session.label}</span>
+              </div>
+              <div className="font-medium text-lg text-white">
+                <span ref={(el) => (sessionRefs.current[index] = el)}>0</span>%
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

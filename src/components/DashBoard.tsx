@@ -1,41 +1,45 @@
 import { Addnew } from "./add-new";
 import { ChartRound } from "./ChartRound";
+import IncomeChart from "./ChartSquare";
 import { UpdateDropdown } from "./update-dropdown";
 
 const Dashboard = () => {
   return (
     <div className="flex h-screen bg-gray-100 w-full">
-      {/* Sidebar */}
       <div className="bg-white p-6 w-full space-y-6 shadow-md h-screen">
-        {/* Header */}
-        <div className="flex justify-around p-6 rounded-lg shadow-md bg-blue-300">
+        <h1 className="font-bold text-2xl">Dashboard</h1>{" "}
+        <div className="flex justify-around p-6 rounded-lg shadow-md bg-sky-500">
           <h1 className="text-xl font-bold">Hello, Demmy!</h1>
           <h1 className="text-3xl font-bold">🤗</h1>
         </div>
-
         {/* Overview */}
-        <div className="flex justify-around">
-          <div className="text-center  p-6">
-            <p className="text-sm font-medium">Total Balance</p>
-            <h1 className="text-xl font-bold">2,323$</h1>
-          </div>
-          <div className="text-center  p-6">
-            <p className="text-sm font-medium">Expenses</p>
-            <h1 className="text-xl font-bold text-red-500">2,323$</h1>
+        <div>
+          <h2 className="font-bold">Overview :</h2>
+          <div className="flex justify-around">
+            <div className="text-center p-6">
+              <p className="text-sm font-medium">Total Amount</p>
+              <h1 className="text-xl font-bold">7,323$</h1>
+            </div>
+            <div className="text-center  p-6">
+              <p className="text-sm font-medium">Balance</p>
+              <h1 className="text-xl font-bold">2,323$</h1>
+            </div>
+            <div className="text-center  p-6">
+              <p className="text-sm font-medium">Expenses</p>
+              <h1 className="text-xl font-bold text-red-500">2,323$</h1>
+            </div>
           </div>
         </div>
-
         <div className="bg-white p-4 rounded-lg shadow-md">
-          <div className="flex justify-around mt-4">
+          <div className="flex justify-around">
             <div className="text-center">
-              <p className="mt-2 text-sm">
+              <p className="text-sm">
                 {" "}
                 <Addnew />
               </p>
             </div>
           </div>
         </div>
-
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-bold">Recent Transactions</h2>
           <div className="mt-4 flex justify-between">
@@ -79,10 +83,13 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      <div className="flex-2 bg-gray-200 p-6 w-full">
-        <div className="h-full bg-gray-300 rounded-lg shadow-md">
-          <ChartRound />
+      <div className="flex-2 bg-white p-6 w-full">
+        <div className="h-full flex flex-col justify-around items-center bg-gray-300 rounded-lg shadow-md">
+          <div className="flex gap-5 p-3">
+            <ChartRound />
+            <ChartRound />
+          </div>
+          <IncomeChart />
         </div>
       </div>
     </div>
