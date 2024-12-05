@@ -11,8 +11,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { HiOutlineLogout } from "react-icons/hi";
+import { googleLogout } from "@react-oauth/google";
 
 export function Logout() {
+  const handleLogOut = async () => {
+    await googleLogout();
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -31,7 +36,9 @@ export function Logout() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={() => handleLogOut()}>
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
