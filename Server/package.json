@@ -6,7 +6,6 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.11.5",
-    "prisma": "^6.3.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -14,10 +13,12 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.1",
     "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon --ext ts --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   }
 }
