@@ -24,12 +24,35 @@ export const register = async (req: Request, res: Response) => {
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || "", {
     expiresIn: "1d",
   });
-  res
-    .status(201)
-    .json(
-      new StandardResponse("User registered Successfully", {
-        user: user,
-        token: token,
-      })
-    );
+  res.status(201).json(
+    new StandardResponse("User registered Successfully", {
+      user: user,
+      token: token,
+    })
+  );
+};
+
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    res.status(400).json(new StandardResponse("Invalid credentials", null));
+    return;
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    res.status(400).json(new StandardResponse("Invalid credentials", null));
+  }
+
+  const token = jwt.sign({ userId: user?.id }, process.env.JWT_SECRET || "", {
+    expiresIn: "1d",
+  });
+  res.status(200).json(
+    new StandardResponse("User logged in Successfully", {
+      user: user,
+      token: token,
+    })
+  );
 };
