@@ -1,47 +1,74 @@
-import { HiOutlineHome, HiOutlineLogout } from "react-icons/hi";
-import { FaChartBar } from "react-icons/fa";
-import Dashboard from "./DashBoard";
-import { RiArrowLeftRightLine } from "react-icons/ri";
-
 import { useState } from "react";
-import { AllTransactions } from "./Alltransaction";
-import { Logout } from "./logout";
+import { RiDashboard3Line } from "react-icons/ri";
+import { AiOutlineTransaction } from "react-icons/ai";
 
-export const Sidebar = () => {
-  const [component, setComponent] = useState("Dashboard");
-  const handleClick = (componentName: string) => {
-    setComponent(componentName);
-  };
+import { AllTransactions } from "./Alltransaction";
+import { MdManageAccounts } from "react-icons/md";
+import Dashboard from "./DashBoard";
+import { SetNotification } from "./set-notification";
+
+const Sidebar = () => {
+  const [activeComponent, setActiveComponent] = useState("dashboard"); // Default to dashboard
 
   return (
-    <div className="flex w-full">
-      <div className="flex flex-col items-center w-16 h-screen overflow-hidden text-gray-400 bg-gray-300 rounded">
-        <a className="flex items-center justify-center mt-3" href="#">
-          <HiOutlineHome className="w-8 h-8 text-gray-900" />
+    <div className="flex w-full gap-5">
+      <aside className="flex flex-col rounded-xl w-64 h-screen px-5 py-8 overflow-y-auto bg-indigo-600 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+        <a href="#">
+          <img
+            className="w-auto h-7"
+            src="https://merakiui.com/images/logo.svg"
+            alt="Logo"
+          />
         </a>
-        <div className="flex flex-col items-center mt-3 border-t border-gray-700">
-          <a
-            onClick={() => handleClick("Dashboard")}
-            className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-400 hover:text-gray-300"
-          >
-            <FaChartBar className="w-6 h-6 text-gray-600" />{" "}
-            {/* Dashboard icon */}
-          </a>
-          <a
-            onClick={() => handleClick("Transactions")}
-            className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-400 hover:text-gray-300"
-          >
-            <RiArrowLeftRightLine className="w-6 h-6 text-gray-600" />{" "}
-          </a>
+
+        <div className="flex flex-col justify-between flex-1 mt-6">
+          <nav className="-mx-3 space-y-6">
+            <div className="space-y-3">
+              <label className="px-3 text-xs text-white uppercase dark:text-gray-400">
+                Analytics
+              </label>
+              <button
+                className={`flex items-center w-full px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
+                  activeComponent === "dashboard"
+                    ? "bg-gray-700"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                }`}
+                onClick={() => setActiveComponent("dashboard")}
+              >
+                <RiDashboard3Line size={25} />
+                <span className="mx-2 text-sm font-medium">Dashboard</span>
+              </button>
+              <button
+                className={`flex items-center w-full px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200 ${
+                  activeComponent === "transactions"
+                    ? "bg-gray-700"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                }`}
+                onClick={() => setActiveComponent("transactions")}
+              >
+                <AiOutlineTransaction size={25} />
+                <span className="mx-2 text-sm font-medium">
+                  All transactions
+                </span>
+              </button>
+              <button className="flex items-center w-full px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200">
+                <MdManageAccounts size={25} />
+                <span className="mx-2 text-sm font-medium">Account</span>
+              </button>{" "}
+              <button className="flex items-center w-full px-3 py-2 text-white transition-colors duration-300 transform rounded-lg dark:text-gray-200">
+                <SetNotification />
+              </button>{" "}
+            </div>
+          </nav>
         </div>
-        <a className="flex items-center justify-center w-16 h-16 mt-auto bg-gray-800 hover:bg-gray-700 hover:text-gray-300">
-          <Logout />
-        </a>
-      </div>
-      <div className="w-full">
-        {component === "Dashboard" && <Dashboard />}
-        {component === "Transactions" && <AllTransactions />}
-      </div>
+      </aside>
+
+      <main className="flex-1 bg-gray-100 rounded-xl max-h-screen overflow-auto [&::-webkit-scrollbar]:hidden scrollbar-thin scrollbar-none">
+        {activeComponent === "dashboard" && <Dashboard />}
+        {activeComponent === "transactions" && <AllTransactions />}
+      </main>
     </div>
   );
 };
+
+export default Sidebar;

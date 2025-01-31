@@ -94,7 +94,7 @@ const IncomeChart: React.FC = () => {
   };
 
   return (
-    <div className="bg-white text-gray-800 rounded shadow-xl py-3 px-4 w-full lg:w-3/4">
+    <div className="bg-white text-gray-800 ">
       <div className="flex flex-wrap items-end justify-between mb-2">
         <h3 className="text-sm font-semibold leading-tight text-gray-900">
           Income
