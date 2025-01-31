@@ -21,15 +21,16 @@ export const register = async (req: Request, res: Response) => {
       password: hashedPassword,
     },
   });
-  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || "", {
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "", {
     expiresIn: "1d",
   });
-  res.status(201).json(
-    new StandardResponse("User registered Successfully", {
-      user: user,
-      token: token,
-    })
-  );
+  res.cookie("user", JSON.stringify({ id: user.id, token: token }), {
+    httpOnly: false,
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: true,
+    sameSite: "none",
+  });
+  res.status(201).json(new StandardResponse("User registered Successfully"));
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -46,13 +47,14 @@ export const login = async (req: Request, res: Response) => {
     res.status(400).json(new StandardResponse("Invalid credentials", null));
   }
 
-  const token = jwt.sign({ userId: user?.id }, process.env.JWT_SECRET || "", {
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "", {
     expiresIn: "1d",
   });
-  res.status(200).json(
-    new StandardResponse("User logged in Successfully", {
-      user: user,
-      token: token,
-    })
-  );
+  res.cookie("user", JSON.stringify({ id: user.id, token: token }), {
+    httpOnly: false,
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: true,
+    sameSite: "none",
+  });
+  res.status(200).json(new StandardResponse("User logged in Successfully"));
 };

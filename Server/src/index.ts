@@ -6,6 +6,7 @@ import { PoolConnection } from "mysql2/promise";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import expenseRoute from "./route/expenseRoute";
 import userRoute from "./route/userRoute";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/expense", expenseRoute);
 app.use("/user", userRoute);
