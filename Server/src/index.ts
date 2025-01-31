@@ -5,6 +5,7 @@ import pool from "./config/db";
 import { PoolConnection } from "mysql2/promise";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import expenseRoute from "./route/expenseRoute";
+import userRoute from "./route/userRoute";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/expense", expenseRoute);
+app.use("/user", userRoute);
 app.use(globalErrorHandler);
 pool
   .getConnection()
