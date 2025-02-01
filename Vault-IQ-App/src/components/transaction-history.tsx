@@ -1,4 +1,4 @@
-const TransactionHistory = () => {
+export const RecnetTransactions = () => {
   const transactions = [
     {
       id: 1,
@@ -26,13 +26,8 @@ const TransactionHistory = () => {
     <div className="max-w-4xl h-[290px] mx-auto bg-white overflow-y-auto">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-800">
-          Transactions History
+          Recnet Transactions
         </h2>
-        <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg">
-            <span>Filter</span>
-          </button>
-        </div>
       </div>
 
       <table className="w-full text-left border-collapse">
@@ -79,5 +74,3 @@ const TransactionHistory = () => {
     </div>
   );
 };
-
-export default TransactionHistory;

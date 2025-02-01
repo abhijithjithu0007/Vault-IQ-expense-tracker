@@ -8,11 +8,11 @@ import Dashboard from "./DashBoard";
 import { SetNotification } from "./set-notification";
 
 const Sidebar = () => {
-  const [activeComponent, setActiveComponent] = useState("dashboard"); // Default to dashboard
+  const [activeComponent, setActiveComponent] = useState("dashboard");
 
   return (
     <div className="flex w-full gap-5">
-      <aside className="flex flex-col rounded-xl w-64 h-screen px-5 py-8 overflow-y-auto bg-indigo-600 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+      <aside className="flex flex-col rounded-xl w-64 h-screen px-5 py-8 overflow-y-auto bg-gradient-to-br from-[#931be3] to-indigo-600 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
         <a href="#">
           <img
             className="w-auto h-7"

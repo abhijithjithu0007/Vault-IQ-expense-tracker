@@ -11,7 +11,7 @@ type Transaction = {
   id: number;
   amount: number;
   reason: string;
-  time: string; // ISO date string
+  time: string;
 };
 
 const transactionsData: Transaction[] = [
@@ -32,7 +32,6 @@ export const AllTransactions = () => {
       <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-semibold mb-4">Transaction History</h1>
 
-        {/* Search Bar */}
         <div className="mb-4">
           <input
             type="text"
@@ -40,8 +39,6 @@ export const AllTransactions = () => {
             className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
-
-        {/* Sort and Table Header */}
         <div className="flex justify-between items-center mb-2">
           <button className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg">
             Sort by Date (Newest)
@@ -60,8 +57,6 @@ export const AllTransactions = () => {
             </Select>
           </div>
         </div>
-
-        {/* Transactions Table */}
         <div className="overflow-x-auto">
           <table className="w-full table-auto border-collapse">
             <thead>

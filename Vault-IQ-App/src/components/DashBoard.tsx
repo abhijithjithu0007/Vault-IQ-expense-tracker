@@ -1,6 +1,6 @@
 import { Addnew } from "./add-new";
 import IncomeChart from "./ChartSquare";
-import TransactionHistory from "./transaction-history";
+import { RecnetTransactions } from "./transaction-history";
 
 const Dashboard = () => {
   return (
@@ -41,7 +41,7 @@ const Dashboard = () => {
 
       {/* Full-width Transaction History */}
       <div className="bg-white p-6 shadow-md rounded-lg mt-6">
-        <TransactionHistory />
+        <RecnetTransactions />
       </div>
     </div>
   );
