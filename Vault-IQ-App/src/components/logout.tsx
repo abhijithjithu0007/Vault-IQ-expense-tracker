@@ -11,27 +11,29 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { HiOutlineLogout } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export function Logout() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="outline">
           {" "}
+          Logout
           <HiOutlineLogout />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            transaction and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogTitle className="text-center">
+            Are you absolutely sure?
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <Link to="/login">
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </Link>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

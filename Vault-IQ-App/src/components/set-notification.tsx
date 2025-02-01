@@ -18,7 +18,7 @@ export function SetNotification() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="p-0 hover:bg-transparent">
-          <IoNotificationsSharp size={25} />
+          <IoNotificationsSharp size={30} />
           Notifications
         </Button>
       </SheetTrigger>

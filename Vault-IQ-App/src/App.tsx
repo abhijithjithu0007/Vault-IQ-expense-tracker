@@ -1,15 +1,19 @@
-import Sidebar from "./components/Sidebar";
+// import Sidebar from "./components/Sidebar";
 
-// import Login from "./components/Login";
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import Signup from "./components/sigin-up";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <>
-      <div className="flex w-full p-6 ">
-        <Sidebar />
-        {/* <Login /> */}
-      </div>
-    </>
+    <div className="flex w-full p-0">
+      <Routes>
+        <Route path="/" element={<Sidebar />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </div>
   );
 }
 

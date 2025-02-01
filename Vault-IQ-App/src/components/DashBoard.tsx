@@ -4,7 +4,7 @@ import { RecnetTransactions } from "./transaction-history";
 
 const Dashboard = () => {
   return (
-    <div className="h-screen  w-full p-6">
+    <div className="h-screen  w-full p-3">
       <div className="flex gap-6">
         <div className="bg-white p-6 w-1/2 space-y-6 shadow-md rounded-lg">
           <div className="flex justify-around p-4 rounded-lg shadow-md bg-sky-500 text-white">
@@ -27,19 +27,16 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Add New Button */}
           <div className="bg-white pb-4 rounded-lg shadow-md flex justify-center">
             <Addnew />
           </div>
         </div>
 
-        {/* Right Side: Income Chart */}
         <div className="bg-white p-6 w-1/2 shadow-md rounded-lg flex justify-center items-center">
           <IncomeChart />
         </div>
       </div>
 
-      {/* Full-width Transaction History */}
       <div className="bg-white p-6 shadow-md rounded-lg mt-6">
         <RecnetTransactions />
       </div>
