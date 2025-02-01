@@ -1,6 +1,6 @@
-import { Addnew } from "./add-new";
-import IncomeChart from "./ChartSquare";
-import { RecnetTransactions } from "./transaction-history";
+import { Addnew } from "../components/add-new";
+import IncomeChart from "../components/ChartSquare";
+import { RecnetTransactions } from "../components/transaction-history";
 
 const Dashboard = () => {
   return (

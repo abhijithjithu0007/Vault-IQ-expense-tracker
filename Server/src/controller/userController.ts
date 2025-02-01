@@ -24,13 +24,9 @@ export const register = async (req: Request, res: Response) => {
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "", {
     expiresIn: "1d",
   });
-  res.cookie("user", JSON.stringify({ id: user.id, token: token }), {
-    httpOnly: false,
-    maxAge: 1000 * 60 * 60 * 24,
-    secure: true,
-    sameSite: "none",
-  });
-  res.status(201).json(new StandardResponse("User registered Successfully"));
+  res
+    .status(201)
+    .json(new StandardResponse("User registered Successfully", { token }));
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -50,11 +46,8 @@ export const login = async (req: Request, res: Response) => {
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "", {
     expiresIn: "1d",
   });
-  res.cookie("user", JSON.stringify({ id: user.id, token: token }), {
-    httpOnly: false,
-    maxAge: 1000 * 60 * 60 * 24,
-    secure: true,
-    sameSite: "none",
-  });
-  res.status(200).json(new StandardResponse("User logged in Successfully"));
+
+  res
+    .status(200)
+    .json(new StandardResponse("User logged in Successfully", { token }));
 };

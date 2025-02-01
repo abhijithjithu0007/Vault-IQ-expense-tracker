@@ -2,11 +2,11 @@ import { useState } from "react";
 import { RiDashboard3Line } from "react-icons/ri";
 import { AiOutlineTransaction } from "react-icons/ai";
 
-import { AllTransactions } from "./Alltransaction";
+import { AllTransactions } from "../pages/Alltransaction";
 import { MdManageAccounts } from "react-icons/md";
-import Dashboard from "./DashBoard";
+import Dashboard from "../pages/DashBoard";
 import { SetNotification } from "./set-notification";
-import { Profile } from "./profile";
+import { Profile } from "../pages/profile";
 
 const Sidebar = () => {
   const [activeComponent, setActiveComponent] = useState("dashboard");

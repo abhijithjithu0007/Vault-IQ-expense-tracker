@@ -1,8 +1,6 @@
-// import Sidebar from "./components/Sidebar";
-
 import { Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/sigin-up";
+import Login from "./pages/Login";
+import Signup from "./pages/sigin-up";
 import Sidebar from "./components/Sidebar";
 
 function App() {
