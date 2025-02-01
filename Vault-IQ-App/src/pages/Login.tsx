@@ -27,7 +27,9 @@ export default function Login() {
         </button>
         <div className="flex mt-6 justify-center text-xs">
           <Link to={"/signup"}>
-            <p className="text-blue-400 hover:text-blue-500">Sign Up</p>
+            <p className="text-blue-400 hover:text-blue-500 hover:cursor-pointer">
+              Sign Up
+            </p>
           </Link>
         </div>
       </form>
