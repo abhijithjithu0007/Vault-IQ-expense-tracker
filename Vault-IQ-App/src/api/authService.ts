@@ -12,12 +12,14 @@ export const loginUser = async (email: string, password: string) => {
 export const registerUser = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  currency: string
 ) => {
   const res = await axiosInstance.post("/user/register", {
     name,
     email,
     password,
+    currency,
   });
 
   const data = res.data;

@@ -7,8 +7,14 @@ interface AuthState {
   error: string | null;
   status: number | null;
   message: string | null;
+  currency: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  register: (
+    name: string,
+    email: string,
+    password: string,
+    currency: string
+  ) => Promise<void>;
   clearError: () => void;
 }
 
@@ -18,6 +24,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   message: null,
   error: null,
   status: null,
+  currency: null,
   login: async (email, password) => {
     set({ loading: true, error: null });
     try {
@@ -33,10 +40,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  register: async (name, email, password) => {
+  register: async (name, email, password, currency) => {
     set({ loading: true, error: null });
     try {
-      const data = await registerUser(name, email, password);
+      const data = await registerUser(name, email, password, currency);
       set({
         user: data.data.token,
         message: data.message,

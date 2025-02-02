@@ -3,7 +3,6 @@ import { RiDashboard3Line } from "react-icons/ri";
 import { AiOutlineTransaction } from "react-icons/ai";
 
 import { AllTransactions } from "../pages/Alltransaction";
-import { MdManageAccounts } from "react-icons/md";
 import Dashboard from "../pages/DashBoard";
 import { SetNotification } from "./set-notification";
 import { Profile } from "../pages/profile";

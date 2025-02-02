@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const register = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, currency } = req.body;
 
   const existUser = await prisma.user.findUnique({ where: { email } });
   if (existUser) {
@@ -18,6 +18,7 @@ export const register = async (req: Request, res: Response) => {
     data: {
       name,
       email,
+      currency,
       password: hashedPassword,
     },
   });

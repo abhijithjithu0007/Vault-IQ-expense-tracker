@@ -9,10 +9,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import Cookies from "js-cookie";
 import { HiOutlineLogout } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Logout() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Cookies.remove("token");
+    navigate("/login");
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -30,9 +36,7 @@ export function Logout() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Link to="/login">
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </Link>
+          <AlertDialogAction onClick={handleLogout}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
