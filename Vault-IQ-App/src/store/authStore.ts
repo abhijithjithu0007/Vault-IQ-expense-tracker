@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({
         user: data.data.token,
         message: data.message,
-        status: data.status,
+        status: data.statusCode,
         loading: false,
       });
     } catch (err: any) {
@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({
         user: data.data.token,
         message: data.message,
-        status: data.status,
+        status: data.statusCode,
         loading: false,
       });
       console.log(data);

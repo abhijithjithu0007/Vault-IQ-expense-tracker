@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/authStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -9,17 +9,19 @@ export default function Signup() {
   const register = useAuthStore((state) => state.register);
   const message = useAuthStore((state) => state.message);
   const status = useAuthStore((state) => state.status);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await register(name, email, password);
-    if (status === 201) {
+  };
+
+  useEffect(() => {
+    if (status === 200) {
       alert(message);
       navigate("/");
     }
-  };
+  }, [status, message]);
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700">
