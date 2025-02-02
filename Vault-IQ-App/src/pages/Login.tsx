@@ -1,6 +1,25 @@
-import { Link } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const login = useAuthStore((state) => state.login);
+  const message = useAuthStore((state) => state.message);
+  const status = useAuthStore((state) => state.status);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(email, password);
+  };
+  useEffect(() => {
+    if (status === 200) {
+      alert(message);
+      navigate("/");
+    }
+  }, [status, message]);
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700">
       <h1 className="font-bold text-2xl">{`Welcome Back :)`}</h1>
@@ -14,6 +33,7 @@ export default function Login() {
         <input
           className="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
           type="text"
+          onChange={(e) => setEmail(e.target.value)}
         />
         <label className="font-semibold text-xs mt-3" htmlFor="passwordField">
           Password
@@ -21,8 +41,13 @@ export default function Login() {
         <input
           className="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
           type="password"
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700">
+        <button
+          onClick={handleSubmit}
+          className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
+          type="submit"
+        >
           Login
         </button>
         <div className="flex mt-6 justify-center text-xs">

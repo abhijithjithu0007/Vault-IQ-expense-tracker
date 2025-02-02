@@ -2,7 +2,7 @@ import { axiosInstance } from "@/utils/axios";
 import Cookies from "js-cookie";
 
 export const loginUser = async (email: string, password: string) => {
-  const res = await axiosInstance.post("/login", { email, password });
+  const res = await axiosInstance.post("/user/login", { email, password });
 
   const data = res.data;
   Cookies.set("token", data.data.token, { expires: 1, secure: true });
