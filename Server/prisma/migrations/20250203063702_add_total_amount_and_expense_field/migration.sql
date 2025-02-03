@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `expense` INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN `totalAmount` INTEGER NOT NULL DEFAULT 0;

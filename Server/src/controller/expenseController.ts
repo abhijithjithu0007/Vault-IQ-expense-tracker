@@ -5,15 +5,6 @@ import { StandardResponse } from "../utils/standardResponse";
 import { CustomRequest } from "../types/interface";
 import { redisClient } from "../db/redis";
 
-interface Expense {
-  id: number;
-  userId: number;
-  category: string;
-  amount: number;
-  description: string;
-  createdAt: Date;
-}
-
 const CACHE_KEY = "user_expenses:";
 const CACHE_DURATION = 3600;
 
@@ -24,7 +15,7 @@ export const getExpenses = async (req: CustomRequest, res: Response) => {
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
-    const expenses = JSON.parse(cachedData) as Expense[];
+    const expenses = JSON.parse(cachedData);
     res
       .status(200)
       .json(new StandardResponse("Expenses retrieved from cache", expenses));
@@ -51,6 +42,7 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
       description,
     },
   });
+  await redisClient.del(`${CACHE_KEY}${userId}`);
 
   res.status(201).json(new StandardResponse("Expense added", expense));
 };
