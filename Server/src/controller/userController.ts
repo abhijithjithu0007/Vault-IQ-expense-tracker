@@ -3,6 +3,7 @@ import { prisma } from "../db/client";
 import { StandardResponse } from "../utils/standardResponse";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { CustomRequest } from "../types/interface";
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password, currency } = req.body;
@@ -51,4 +52,10 @@ export const login = async (req: Request, res: Response) => {
   res
     .status(200)
     .json(new StandardResponse("User logged in Successfully", { token }));
+};
+
+export const getUser = async (req: CustomRequest, res: Response) => {
+  const userId = req.user?.id;
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  res.status(200).json(new StandardResponse("User retrieved", user));
 };
