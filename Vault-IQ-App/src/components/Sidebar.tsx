@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RiDashboard3Line } from "react-icons/ri";
 import { AiOutlineTransaction } from "react-icons/ai";
 
-import { AllTransactions } from "../pages/Alltransaction";
+import { Alltransaction } from "@/pages/all-transaction";
 import Dashboard from "../pages/DashBoard";
 import { SetNotification } from "./set-notification";
 import { Profile } from "../pages/profile";
@@ -61,7 +61,7 @@ const Sidebar = () => {
 
       <main className="flex-1 bg-gray-100 rounded-xl max-h-screen overflow-auto [&::-webkit-scrollbar]:hidden scrollbar-thin scrollbar-none">
         {activeComponent === "dashboard" && <Dashboard />}
-        {activeComponent === "transactions" && <AllTransactions />}
+        {activeComponent === "transactions" && <Alltransaction />}
       </main>
     </div>
   );
