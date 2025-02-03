@@ -3,7 +3,7 @@ import express from "express";
 import { validateData } from "../middleware/zodValidation";
 import { errorCatch } from "../utils/errors/errorCatch";
 import { expenseSchema } from "../utils/validation";
-import { addExpense } from "../controller/expenseController";
+import { addExpense, getExpenses } from "../controller/expenseController";
 import { verifyToken } from "../middleware/verifyToken";
 
 const router = express.Router();
@@ -14,5 +14,7 @@ router.post(
   validateData(expenseSchema),
   errorCatch(addExpense)
 );
+
+router.get("/get-expenses", verifyToken, errorCatch(getExpenses));
 
 export default router;
