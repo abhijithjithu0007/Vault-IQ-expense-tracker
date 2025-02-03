@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Addexpensecategory from "./add-expense-category";
 
 export function Addnew() {
   return (
@@ -31,7 +32,9 @@ export function Addnew() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add new transaction</DialogTitle>
+          <DialogTitle className="text-xl font-bold">
+            Add new transaction
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
@@ -40,7 +43,7 @@ export function Addnew() {
             </Label>
             <Select>
               <SelectTrigger className="w-[275px]">
-                <SelectValue placeholder="Select a name" />
+                <SelectValue placeholder="Select a transaction" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -52,13 +55,16 @@ export function Addnew() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Reason
+              Category
             </Label>
             <Select>
               <SelectTrigger className="w-[275px]">
-                <SelectValue placeholder="Select a transaction" />
+                <SelectValue placeholder="Select category" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="h-[250px]">
+                <SelectGroup>
+                  <Addexpensecategory />
+                </SelectGroup>
                 <SelectGroup>
                   <SelectItem value="Credit">Bus</SelectItem>
                   <SelectItem value="Car">Car</SelectItem>
@@ -67,7 +73,6 @@ export function Addnew() {
                   <SelectItem value="Groceries">Groceries</SelectItem>
                   <SelectItem value="Housing">Housing</SelectItem>
                   <SelectItem value="Medical">Medical</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
                   <SelectItem value="Personal">Personal</SelectItem>
                 </SelectGroup>
               </SelectContent>
