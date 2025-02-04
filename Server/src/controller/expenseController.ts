@@ -12,21 +12,11 @@ export const getExpenses = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
   const cacheKey = `${CACHE_KEY}${userId}`;
 
-  const cachedData = await redisClient.get(cacheKey);
-
-  if (cachedData) {
-    const expenses = JSON.parse(cachedData);
-    res
-      .status(200)
-      .json(new StandardResponse("Expenses retrieved from cache", expenses));
-  }
-
-  const expenses = await prisma.expense.findMany({
-    where: {
-      userId: userId,
-    },
+  const expenses = await getOrSetCache(cacheKey, async () => {
+    return await prisma.expense.findMany({
+      where: { userId },
+    });
   });
-  await redisClient.setex(cacheKey, CACHE_DURATION, JSON.stringify(expenses));
 
   res.status(200).json(new StandardResponse("Expenses retrieved", expenses));
 };
@@ -46,3 +36,20 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
 
   res.status(201).json(new StandardResponse("Expense added", expense));
 };
+
+function getOrSetCache(key: string, cb: () => Promise<any>) {
+  return new Promise((resolve, reject) => {
+    redisClient.get(key, async (err, data) => {
+      if (err) return reject(err);
+      if (data !== null) {
+        console.log("Data from Cache");
+        return resolve(data ? JSON.parse(data) : null);
+      }
+      const freshData = await cb();
+      redisClient.setex(key, CACHE_DURATION, JSON.stringify(freshData));
+      console.log("Data from DB");
+
+      resolve(freshData);
+    });
+  });
+}

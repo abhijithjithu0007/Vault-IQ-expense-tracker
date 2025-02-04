@@ -6,9 +6,25 @@ import { Alltransaction } from "@/pages/all-transaction";
 import Dashboard from "../pages/DashBoard";
 import { SetNotification } from "./set-notification";
 import { Profile } from "../pages/profile";
+import { getUserDetails } from "@/api/userService";
+import { useQuery } from "@tanstack/react-query";
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  currency: string;
+  totalAmount: number;
+  currentExpense: number;
+}
 
 const Sidebar = () => {
   const [activeComponent, setActiveComponent] = useState("dashboard");
+
+  const { data } = useQuery<User, Error>({
+    queryKey: ["userProfile"],
+    queryFn: getUserDetails,
+  });
 
   return (
     <div className="flex w-full gap-5 p-3">
