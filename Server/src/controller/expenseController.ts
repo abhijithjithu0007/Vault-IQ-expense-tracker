@@ -4,15 +4,13 @@ import { expenseSchema } from "../utils/validation";
 import { StandardResponse } from "../utils/standardResponse";
 import { CustomRequest } from "../types/interface";
 import { redisClient } from "../db/redis";
-
-const CACHE_KEY = "user_expenses:";
-const CACHE_DURATION = 3600;
+import { getOrSetCache } from "../utils/cache";
 
 export const getExpenses = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
-  const cacheKey = `${CACHE_KEY}${userId}`;
+  const cacheKey = `user_expenses:"${userId}`;
 
-  const expenses = await getOrSetCache(cacheKey, async () => {
+  const expenses = await getOrSetCache(cacheKey, 3600, async () => {
     return await prisma.expense.findMany({
       where: { userId },
     });
@@ -32,24 +30,7 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
       description,
     },
   });
-  await redisClient.del(`${CACHE_KEY}${userId}`);
+  await redisClient.del(`user_expenses:"${userId}`);
 
   res.status(201).json(new StandardResponse("Expense added", expense));
 };
-
-function getOrSetCache(key: string, cb: () => Promise<any>) {
-  return new Promise((resolve, reject) => {
-    redisClient.get(key, async (err, data) => {
-      if (err) return reject(err);
-      if (data !== null) {
-        console.log("Data from Cache");
-        return resolve(data ? JSON.parse(data) : null);
-      }
-      const freshData = await cb();
-      redisClient.setex(key, CACHE_DURATION, JSON.stringify(freshData));
-      console.log("Data from DB");
-
-      resolve(freshData);
-    });
-  });
-}

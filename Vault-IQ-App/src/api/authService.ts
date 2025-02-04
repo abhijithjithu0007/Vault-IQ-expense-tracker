@@ -5,7 +5,10 @@ export const loginUser = async (email: string, password: string) => {
   const res = await axiosInstance.post("/user/login", { email, password });
 
   const data = res.data;
-  Cookies.set("token", data.data.token, { expires: 1, secure: true });
+  Cookies.set("token", data.data.token, {
+    expires: new Date(Date.now() + 86400000),
+    secure: true,
+  });
   return data;
 };
 
@@ -23,6 +26,9 @@ export const registerUser = async (
   });
 
   const data = res.data;
-  Cookies.set("token", data.data.token, { expires: 1, secure: true });
+  Cookies.set("token", data.data.token, {
+    expires: new Date(Date.now() + 86400000),
+    secure: true,
+  });
   return data;
 };

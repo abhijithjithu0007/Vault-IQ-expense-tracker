@@ -18,8 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/expense", expenseRoute);
-app.use("/user", userRoute);
+app.use("/api/expense", expenseRoute);
+app.use("/api/user", userRoute);
 app.use(globalErrorHandler);
 pool
   .getConnection()

@@ -9,13 +9,15 @@ import { Profile } from "../pages/profile";
 import { getUserDetails } from "@/api/userService";
 import { useQuery } from "@tanstack/react-query";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  currency: string;
-  totalAmount: number;
-  currentExpense: number;
+export interface User {
+  data: {
+    id: number;
+    name: string;
+    email: string;
+    currency: string;
+    totalAmount: number;
+    expense: number;
+  };
 }
 
 const Sidebar = () => {
@@ -76,7 +78,11 @@ const Sidebar = () => {
       </aside>
 
       <main className="flex-1 bg-gray-100 rounded-xl max-h-screen overflow-auto [&::-webkit-scrollbar]:hidden scrollbar-thin scrollbar-none">
-        {activeComponent === "dashboard" && <Dashboard />}
+        {activeComponent === "dashboard" && data ? (
+          <Dashboard user={data} />
+        ) : (
+          ""
+        )}
         {activeComponent === "transactions" && <Alltransaction />}
       </main>
     </div>
