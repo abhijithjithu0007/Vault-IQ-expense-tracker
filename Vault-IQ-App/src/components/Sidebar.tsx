@@ -16,7 +16,7 @@ export interface User {
     email: string;
     currency: string;
     totalAmount: number;
-    expense: number;
+    currentExpense: number;
   };
 }
 

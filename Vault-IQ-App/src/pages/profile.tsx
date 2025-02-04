@@ -9,8 +9,16 @@ import {
 
 import { MdManageAccounts } from "react-icons/md";
 import { Logout } from "../components/logout";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "@/components/Sidebar";
 
 export function Profile() {
+  const { data } = useQuery<User>({
+    queryKey: ["userProfile"],
+  });
+
+  console.log(data);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -31,9 +39,9 @@ export function Profile() {
               alt="profile"
             />
           </div>
-          <div className="flex flex-col gap-4 items-center justify-center">
-            <h1 className="text-xl font-semibold">Abhijith v</h1>
-            <h1 className="text-xl font-semibold">abhi@gmail.com</h1>
+          <div className="flex flex-col w-1/2 gap-4 items-start justify-center">
+            <h1 className="text-xl font-semibold">{data?.data.name}</h1>
+            <h1 className="text-sm font-semibold">{data?.data.email}</h1>
           </div>
         </div>
         <DialogFooter>

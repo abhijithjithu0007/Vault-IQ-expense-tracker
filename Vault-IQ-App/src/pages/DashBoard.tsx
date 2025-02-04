@@ -22,13 +22,13 @@ const Dashboard = ({ user }: { user: User }) => {
                 <p className="text-sm font-medium">Balance</p>
                 <h1 className="text-xl font-bold">
                   {" "}
-                  {user.data.totalAmount - user.data.expense}
+                  {user.data.totalAmount - user.data.currentExpense}
                 </h1>
               </div>
               <div className="text-center p-6">
                 <p className="text-sm font-medium">Expenses</p>
                 <h1 className="text-xl font-bold text-red-500">
-                  {user.data.expense}
+                  {user.data.currentExpense}
                 </h1>
               </div>
             </div>

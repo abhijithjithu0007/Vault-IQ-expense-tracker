@@ -21,16 +21,16 @@ export const getExpenses = async (req: CustomRequest, res: Response) => {
 
 export const addExpense = async (req: CustomRequest, res: Response) => {
   const parsedData = expenseSchema.parse(req.body);
-  const { userId, category, amount, description } = parsedData;
+  const { category, amount, description } = parsedData;
   const expense = await prisma.expense.create({
     data: {
-      userId,
+      userId: req.user!.id,
       category,
       amount,
       description,
     },
   });
-  await redisClient.del(`user_expenses:"${userId}`);
+  await redisClient.del(`user_expenses:"${req.user?.id}"`);
 
   res.status(201).json(new StandardResponse("Expense added", expense));
 };
