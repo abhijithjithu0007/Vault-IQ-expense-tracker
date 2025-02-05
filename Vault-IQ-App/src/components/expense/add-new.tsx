@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import Addexpensecategory from "./add-expense-category";
 import { useState } from "react";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import { useExpenseStore } from "@/store/expenseStore";
 
 export function Addnew() {

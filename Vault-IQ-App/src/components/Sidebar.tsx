@@ -2,10 +2,10 @@ import { useState } from "react";
 import { RiDashboard3Line } from "react-icons/ri";
 import { AiOutlineTransaction } from "react-icons/ai";
 
-import { Alltransaction } from "@/pages/all-transaction";
-import Dashboard from "../pages/DashBoard";
+import { Alltransaction } from "@/components/expense/all-transaction";
+import Dashboard from "./DashBoard";
 import { SetNotification } from "./set-notification";
-import { Profile } from "../pages/profile";
+import { Profile } from "./auth/profile";
 import { getUserDetails } from "@/api/userService";
 import { useQuery } from "@tanstack/react-query";
 

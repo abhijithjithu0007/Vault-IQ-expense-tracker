@@ -1,10 +1,8 @@
-import { Addnew } from "../components/add-new";
-import IncomeChart from "../components/ChartSquare";
-import { RecnetTransactions } from "../components/transaction-history";
+import { Addnew } from "@/components/expense/add-new";
+import IncomeChart from "./ChartSquare";
+import { RecnetTransactions } from "./expense/transaction-history";
 import { User } from "@/components/Sidebar";
 const Dashboard = ({ user }: { user: User }) => {
-  console.log(user);
-
   return (
     <div className="h-screen  w-full p-3">
       <div className="flex gap-6">

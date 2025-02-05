@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { MdManageAccounts } from "react-icons/md";
-import { Logout } from "../components/logout";
+import { Logout } from "./logout";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "@/components/Sidebar";
 
@@ -16,8 +16,6 @@ export function Profile() {
   const { data } = useQuery<User>({
     queryKey: ["userProfile"],
   });
-
-  console.log(data);
 
   return (
     <Dialog>

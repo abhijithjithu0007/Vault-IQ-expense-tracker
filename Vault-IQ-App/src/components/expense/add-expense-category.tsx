@@ -1,7 +1,7 @@
-import { Dialog, DialogFooter, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogFooter, DialogTrigger } from "../ui/dialog";
 import { DialogContent } from "@radix-ui/react-dialog";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export default function Addexpensecategory() {
   return (

@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/sigin-up";
+import Login from "./components/auth/Login";
+import Signup from "./components/auth/sigin-up";
 import Sidebar from "./components/Sidebar";
 import { ProtectedRoute } from "./components/protected-route";
 import Cookies from "js-cookie";

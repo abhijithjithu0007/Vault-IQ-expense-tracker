@@ -1,4 +1,4 @@
-import { SelectCurrency } from "@/components/select-currency";
+import { SelectCurrency } from "@/components/auth/select-currency";
 import { useAuthStore } from "@/store/authStore";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
