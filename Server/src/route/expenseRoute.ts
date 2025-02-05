@@ -8,6 +8,7 @@ import {
   addUserIncome,
   deleteExpense,
   getExpenses,
+  updateExpense,
 } from "../controller/expenseController";
 import { verifyToken } from "../middleware/verifyToken";
 
@@ -23,4 +24,5 @@ router.post(
 router.get("/get-expenses", verifyToken, errorCatch(getExpenses));
 router.post("/add-income", verifyToken, errorCatch(addUserIncome));
 router.delete("/delete-expense/:id", verifyToken, errorCatch(deleteExpense));
+router.patch("/update-expense/:id", verifyToken, errorCatch(updateExpense));
 export default router;

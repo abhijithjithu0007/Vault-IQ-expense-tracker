@@ -78,3 +78,17 @@ export const deleteExpense = async (req: CustomRequest, res: Response) => {
   await redisClient.del(`user_details:${req.user?.id}`);
   res.status(200).json(new StandardResponse("Expense deleted", deletedExpense));
 };
+
+export const updateExpense = async (req: CustomRequest, res: Response) => {
+  const { id } = req.params;
+  const { category, amount, description } = req.body;
+
+  const updatedExpense = await prisma.expense.update({
+    where: { id: Number(id) },
+    data: { category, amount, description },
+  });
+
+  await redisClient.del(`user_expenses:${req.user?.id}`);
+  await redisClient.del(`user_details:${req.user?.id}`);
+  res.status(200).json(new StandardResponse("Expense updated", updatedExpense));
+};
