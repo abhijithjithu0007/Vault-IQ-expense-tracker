@@ -125,26 +125,15 @@ export function Addnew() {
               className="w-full"
             />
           </div>
-          <div className="flex items-start gap-4">
-            <Label className="w-1/3 text-right">Description</Label>
-            <Textarea
-              placeholder="Enter transaction details..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full h-24"
-            />
-          </div>
-
           {currentTransaction === "Expense" && (
-            <div className="flex justify-end">
-              <p className="text-sm text-right w-3/4">
-                If you would like to add a new bill to your records, please
-                click
-                <span className="text-blue-600 hover:underline cursor-pointer">
-                  {" "}
-                  here.
-                </span>
-              </p>
+            <div className="flex items-start gap-4">
+              <Label className="w-1/3 text-right">Description</Label>
+              <Textarea
+                placeholder="Enter transaction details..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full h-24"
+              />
             </div>
           )}
         </div>

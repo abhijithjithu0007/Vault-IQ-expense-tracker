@@ -93,7 +93,7 @@ export function Alltransaction() {
                   </span>
                 </td>
                 <td className="px-11 py-4">
-                  <DropdownMenu>
+                  <DropdownMenu modal={false}>
                     <DropdownMenuTrigger>
                       <PiDotsThreeCircleVertical size={20} />
                     </DropdownMenuTrigger>

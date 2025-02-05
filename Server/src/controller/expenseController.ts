@@ -83,12 +83,25 @@ export const updateExpense = async (req: CustomRequest, res: Response) => {
   const { id } = req.params;
   const { category, amount, description } = req.body;
 
+  const oldExpense = await prisma.expense.findUnique({
+    where: { id: Number(id) },
+    select: { amount: true },
+  });
+
+  const difference = amount - (oldExpense?.amount ?? 0);
   const updatedExpense = await prisma.expense.update({
     where: { id: Number(id) },
     data: { category, amount, description },
   });
 
+  await prisma.user.update({
+    where: { id: req.user!.id },
+    data: {
+      currentExpense: { increment: difference },
+    },
+  });
   await redisClient.del(`user_expenses:${req.user?.id}`);
   await redisClient.del(`user_details:${req.user?.id}`);
+
   res.status(200).json(new StandardResponse("Expense updated", updatedExpense));
 };

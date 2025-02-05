@@ -21,6 +21,7 @@ import {
 import Addexpensecategory from "./add-expense-category";
 import { Textarea } from "../ui/textarea";
 import { useExpenseStore } from "@/store/expenseStore";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   id: number;
@@ -37,6 +38,12 @@ export default function Updateexpense({ expense }: { expense: Props }) {
   const [description, setDescription] = useState<string>(expense.description);
 
   const updateExpense = useExpenseStore((state) => state.updateExpense);
+  const { refetch } = useQuery({
+    queryKey: ["expenses"],
+  });
+  const { refetch: refetchUser } = useQuery({
+    queryKey: ["userProfile"],
+  });
 
   const handleUpdateExpense = async () => {
     const { message } = await updateExpense(
@@ -46,6 +53,8 @@ export default function Updateexpense({ expense }: { expense: Props }) {
       description
     );
     alert(message);
+    refetch();
+    refetchUser();
   };
 
   return (
