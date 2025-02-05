@@ -6,6 +6,7 @@ import { expenseSchema } from "../utils/validation";
 import {
   addExpense,
   addUserIncome,
+  deleteExpense,
   getExpenses,
 } from "../controller/expenseController";
 import { verifyToken } from "../middleware/verifyToken";
@@ -21,4 +22,5 @@ router.post(
 
 router.get("/get-expenses", verifyToken, errorCatch(getExpenses));
 router.post("/add-income", verifyToken, errorCatch(addUserIncome));
+router.delete("/delete-expense/:id", verifyToken, errorCatch(deleteExpense));
 export default router;

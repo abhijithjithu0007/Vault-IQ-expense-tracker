@@ -1,5 +1,6 @@
 import { getExpenses } from "@/api/expenseService";
 import { Input } from "@/components/ui/input";
+import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import {
   Select,
   SelectContent,
@@ -10,7 +11,13 @@ import {
 import { Search, Filter } from "lucide-react";
 import { Expense } from "./transaction-history";
 import { useQuery } from "@tanstack/react-query";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { DeleteExpense } from "./delete-expense";
 export function Alltransaction() {
   const { data } = useQuery<Expense, Error>({
     queryKey: ["expenses"],
@@ -56,6 +63,7 @@ export function Alltransaction() {
               <th className="px-6 py-3 text-left">Amount</th>
               <th className="px-6 py-3 text-left">Date & Time</th>
               <th className="px-6 py-3 text-left">Type</th>
+              <th className="px-6 py-3 text-left">Manage</th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -83,6 +91,19 @@ export function Alltransaction() {
                   <span className="px-2 py-1 rounded-full text-sm bg-orange-100 text-orange-600">
                     Expense
                   </span>
+                </td>
+                <td className="px-11 py-4">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <PiDotsThreeCircleVertical size={20} />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        <DeleteExpense expenseId={order.id} />
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </td>
               </tr>
             ))}

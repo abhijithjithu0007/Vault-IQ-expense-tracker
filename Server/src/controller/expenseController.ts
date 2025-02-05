@@ -6,6 +6,17 @@ import { CustomRequest } from "../types/interface";
 import { redisClient } from "../db/redis";
 import { getOrSetCache } from "../utils/cache";
 
+export const addUserIncome = async (req: CustomRequest, res: Response) => {
+  const { amount } = req.body;
+
+  const addincome = await prisma.user.update({
+    where: { id: req.user!.id },
+    data: { totalAmount: { increment: amount } },
+  });
+
+  await redisClient.del(`user_details:${req.user?.id}`);
+  res.status(200).json(new StandardResponse("Income added", addincome));
+};
 export const getExpenses = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
   const cacheKey = `user_expenses:${userId}`;
@@ -47,14 +58,23 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
   res.status(201).json(new StandardResponse("Expense added", expense));
 };
 
-export const addUserIncome = async (req: CustomRequest, res: Response) => {
-  const { amount } = req.body;
+export const deleteExpense = async (req: CustomRequest, res: Response) => {
+  const { id } = req.params;
 
-  const addincome = await prisma.user.update({
-    where: { id: req.user!.id },
-    data: { totalAmount: { increment: amount } },
+  const deletedExpense = await prisma.expense.delete({
+    where: { id: Number(id) },
   });
 
+  await prisma.user.update({
+    where: { id: req.user!.id },
+    data: {
+      currentExpense: {
+        decrement: deletedExpense.amount,
+      },
+    },
+  });
+
+  await redisClient.del(`user_expenses:${req.user?.id}`);
   await redisClient.del(`user_details:${req.user?.id}`);
-  res.status(200).json(new StandardResponse("Income added", addincome));
+  res.status(200).json(new StandardResponse("Expense deleted", deletedExpense));
 };

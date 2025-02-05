@@ -25,3 +25,8 @@ export const addUserIncome = async (amount: number) => {
   const res = await axiosInstance.post("/expense/add-income", { amount });
   return res.data;
 };
+
+export const deleteExpense = async (id: number) => {
+  const res = await axiosInstance.delete(`/expense/delete-expense/${id}`);
+  return res.data;
+};
