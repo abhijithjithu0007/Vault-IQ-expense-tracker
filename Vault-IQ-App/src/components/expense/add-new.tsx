@@ -21,6 +21,7 @@ import Addexpensecategory from "./add-expense-category";
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { useExpenseStore } from "@/store/expenseStore";
+import { useQuery } from "@tanstack/react-query";
 
 export function Addnew() {
   const [currentTransaction, setCurrentTransaction] = useState<string>("");
@@ -29,6 +30,9 @@ export function Addnew() {
   const [description, setDescription] = useState<string>("");
   const addExpense = useExpenseStore((state) => state.addExpense);
 
+  const { refetch } = useQuery({
+    queryKey: ["expenses"],
+  });
   const handleAddTransaction = async () => {
     if (currentTransaction === "Expense") {
       const { message, type } = await addExpense(
@@ -38,6 +42,7 @@ export function Addnew() {
         description
       );
       alert(message);
+      refetch();
     }
   };
 

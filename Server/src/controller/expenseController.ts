@@ -8,11 +8,12 @@ import { getOrSetCache } from "../utils/cache";
 
 export const getExpenses = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
-  const cacheKey = `user_expenses:"${userId}`;
+  const cacheKey = `user_expenses:${userId}`;
 
   const expenses = await getOrSetCache(cacheKey, 3600, async () => {
     return await prisma.expense.findMany({
       where: { userId },
+      orderBy: { date: "desc" },
     });
   });
 
@@ -30,7 +31,7 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
       description,
     },
   });
-  await redisClient.del(`user_expenses:"${req.user?.id}"`);
+  await redisClient.del(`user_expenses:${req.user?.id}`);
 
   res.status(201).json(new StandardResponse("Expense added", expense));
 };

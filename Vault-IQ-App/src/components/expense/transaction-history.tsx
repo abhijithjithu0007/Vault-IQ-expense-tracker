@@ -1,33 +1,29 @@
-export const RecnetTransactions = () => {
-  const transactions = [
+import { getExpenses } from "@/api/expenseService";
+import { useQuery } from "@tanstack/react-query";
+
+export interface Expense {
+  data: [
     {
-      id: 1,
-      name: "Figma Pro Plan",
-      description: "Application",
-      type: "Subscription",
-      date: "Oct 20, 2022",
-      time: "10:32 PM",
-      amount: "$64.00",
-      icon: "https://via.placeholder.com/32",
-    },
-    {
-      id: 2,
-      name: "Fiverr International",
-      description: "Freelance platform",
-      type: "Receive",
-      date: "Oct 20, 2022",
-      time: "10:32 PM",
-      amount: "$100.00",
-      icon: "https://via.placeholder.com/32",
-    },
+      id: number;
+      category: string;
+      amount: number;
+      bill: string;
+      description: string;
+      date: string;
+    }
   ];
+}
+export const RecnetTransactions = () => {
+  const { data } = useQuery<Expense, Error>({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+  });
+  const limitedData = data?.data.slice(0, 3);
 
   return (
-    <div className="max-w-4xl h-[290px] mx-auto bg-white overflow-y-auto">
+    <div className="max-w-4xl h-[290px] mx-auto bg-white overflow-auto [&::-webkit-scrollbar]:hidden scrollbar-thin scrollbar-none">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">
-          Recnet Transactions
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-800">Recent Expenses</h2>
       </div>
 
       <table className="w-full text-left border-collapse">
@@ -40,18 +36,14 @@ export const RecnetTransactions = () => {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction) => (
+          {limitedData?.map((transaction) => (
             <tr key={transaction.id} className="border-b hover:bg-gray-50">
               <td className="py-4">
                 <div className="flex items-center gap-4">
-                  <img
-                    src={transaction.icon}
-                    alt={transaction.name}
-                    className="w-8 h-8 rounded-full"
-                  />
+                  <img src="" className="w-8 h-8 rounded-full" />
                   <div>
                     <p className="text-sm font-medium text-gray-800">
-                      {transaction.name}
+                      {transaction.category}
                     </p>
                     <p className="text-xs text-gray-500">
                       {transaction.description}
@@ -59,10 +51,12 @@ export const RecnetTransactions = () => {
                   </div>
                 </div>
               </td>
-              <td className="py-4 text-sm text-gray-700">{transaction.type}</td>
+              <td className="py-4 text-sm text-gray-700">expense</td>
               <td className="py-4 text-sm text-gray-700">
-                <p>{transaction.date}</p>
-                <p className="text-xs text-gray-500">{transaction.time}</p>
+                <p className="text-xs text-gray-500">
+                  {new Date(transaction.date).toLocaleDateString()}
+                </p>{" "}
+                <p>{new Date(transaction.date).toLocaleTimeString()}</p>
               </td>
               <td className="py-4 text-sm font-medium text-gray-800">
                 {transaction.amount}

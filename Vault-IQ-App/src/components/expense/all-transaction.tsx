@@ -1,3 +1,4 @@
+import { getExpenses } from "@/api/expenseService";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -7,66 +8,14 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { Search, Filter } from "lucide-react";
+import { Expense } from "./transaction-history";
+import { useQuery } from "@tanstack/react-query";
 
-const orders = [
-  {
-    id: "#5710",
-    paymentId: "GPY09123HACK33",
-    amount: "$995.00",
-    date: "16 Aug 2023",
-    status: "Pending",
-  },
-  {
-    id: "#5709",
-    paymentId: "GPY09123HACK32",
-    amount: "$121.00",
-    date: "12 Aug 2023",
-    status: "Pending",
-  },
-  {
-    id: "#5708",
-    paymentId: "GPY09123HACK31",
-    amount: "$195.00",
-    date: "29 Jul 2023",
-    status: "Success",
-  },
-  {
-    id: "#5707",
-    paymentId: "GPY09123HACK30",
-    amount: "$248.00",
-    date: "22 Jul 2023",
-    status: "Success",
-  },
-  {
-    id: "#5706",
-    paymentId: "GPY09123HACK29",
-    amount: "$234.00",
-    date: "05 Jul 2023",
-    status: "Success",
-  },
-  {
-    id: "#5705",
-    paymentId: "GPY09123HACK28",
-    amount: "$302.00",
-    date: "24 Jun 2023",
-    status: "Success",
-  },
-  {
-    id: "#5704",
-    paymentId: "GPY09123HACK27",
-    amount: "$847.00",
-    date: "01 Jun 2023",
-    status: "Success",
-  },
-  {
-    id: "#5703",
-    paymentId: "GPY09123HACK26",
-    amount: "$448.00",
-    date: "16 Jun 2023",
-    status: "Success",
-  },
-];
 export function Alltransaction() {
+  const { data } = useQuery<Expense, Error>({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+  });
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-6">
@@ -99,20 +48,18 @@ export function Alltransaction() {
           </div>
         </div>
       </div>
-
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50 text-sm text-gray-500">
             <tr>
-              <th className="px-6 py-3 text-left">Transaction</th>
+              <th className="px-6 py-3 text-left">Category</th>
               <th className="px-6 py-3 text-left">Amount</th>
               <th className="px-6 py-3 text-left">Date</th>
               <th className="px-6 py-3 text-left">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {orders.map((order) => (
+            {data?.data.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
@@ -120,27 +67,21 @@ export function Alltransaction() {
                       <span className="text-purple-600 text-sm">P</span>
                     </div>
                     <div>
-                      <div className="font-medium">
-                        Payment Order {order.id}
-                      </div>
+                      <div className="font-medium">{order.category}</div>
                       <div className="text-sm text-gray-500">
-                        {order.paymentId}
+                        {order.description}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4">{order.amount}</td>
-                <td className="px-6 py-4">{order.date}</td>
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {new Date(order.date).toLocaleDateString()} -
+                  {new Date(order.date).toLocaleTimeString()}
+                </td>
                 <td className="px-6 py-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-sm
-                    ${
-                      order.status === "Pending"
-                        ? "bg-orange-100 text-orange-600"
-                        : "bg-green-100 text-green-600"
-                    }`}
-                  >
-                    {order.status}
+                  <span className="px-2 py-1 rounded-full text-sm bg-orange-100 text-orange-600">
+                    Expense
                   </span>
                 </td>
               </tr>

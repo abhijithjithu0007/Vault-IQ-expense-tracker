@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { UpdateTrans } from "./update-trans";
+import { UpdateTrans } from "./expense/update-trans";
 import { DeleteDialog } from "./delete-dialog";
 
 export function UpdateDropdown() {
