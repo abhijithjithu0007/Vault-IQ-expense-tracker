@@ -28,10 +28,15 @@ export function Addnew() {
   const [category, setCategory] = useState<string>("");
   const [amount, setAmount] = useState<number | undefined>();
   const [description, setDescription] = useState<string>("");
+
   const addExpense = useExpenseStore((state) => state.addExpense);
+  const addIncome = useExpenseStore((state) => state.addIncome);
 
   const { refetch } = useQuery({
     queryKey: ["expenses"],
+  });
+  const { refetch: refetchUser } = useQuery({
+    queryKey: ["userProfile"],
   });
   const handleAddTransaction = async () => {
     if (currentTransaction === "Expense") {
@@ -43,6 +48,13 @@ export function Addnew() {
       );
       alert(message);
       refetch();
+      refetchUser();
+    }
+
+    if (currentTransaction === "Income") {
+      const { message, type } = await addIncome(amount!);
+      alert(message);
+      refetchUser();
     }
   };
 

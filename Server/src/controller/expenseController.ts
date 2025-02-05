@@ -31,7 +31,30 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
       description,
     },
   });
+
+  await prisma.user.update({
+    where: { id: req.user!.id },
+    data: {
+      currentExpense: {
+        increment: amount,
+      },
+    },
+  });
+
   await redisClient.del(`user_expenses:${req.user?.id}`);
+  await redisClient.del(`user_details:${req.user?.id}`);
 
   res.status(201).json(new StandardResponse("Expense added", expense));
+};
+
+export const addUserIncome = async (req: CustomRequest, res: Response) => {
+  const { amount } = req.body;
+
+  const addincome = await prisma.user.update({
+    where: { id: req.user!.id },
+    data: { totalAmount: { increment: amount } },
+  });
+
+  await redisClient.del(`user_details:${req.user?.id}`);
+  res.status(200).json(new StandardResponse("Income added", addincome));
 };

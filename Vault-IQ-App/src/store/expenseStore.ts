@@ -1,4 +1,4 @@
-import { addExpense } from "@/api/expenseService";
+import { addExpense, addUserIncome } from "@/api/expenseService";
 import { create } from "zustand";
 
 interface Expense {
@@ -18,6 +18,7 @@ interface Expense {
     bill: string,
     description: string
   ) => Promise<{ message: string; type: string }>;
+  addIncome: (amount: number) => Promise<{ message: string; type: string }>;
   clearError: () => void;
 }
 
@@ -52,6 +53,14 @@ export const useExpenseStore = create<Expense>((set) => ({
         error: { addExpenseError: err.message || "Something went wrong" },
         loading: { addExpenseLoad: false },
       });
+      return { message: err.message, type: "error" };
+    }
+  },
+  addIncome: async (amount) => {
+    try {
+      const data = await addUserIncome(amount);
+      return { message: data.message, type: "success" };
+    } catch (err: any) {
       return { message: err.message, type: "error" };
     }
   },

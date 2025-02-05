@@ -8,14 +8,14 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  totalAmount Int @default(0)
-  currentExpense  Int @default(0)
-  currency  String @default("IND") 
-  expenses  Expense[]
+  id             Int       @id @default(autoincrement())
+  name           String
+  email          String    @unique
+  password       String
+  totalAmount    Int       @default(0)
+  currentExpense Float     @default(0)
+  currency       String    @default("IND")
+  expenses       Expense[]
 }
 
 model Expense {
@@ -23,9 +23,9 @@ model Expense {
   userId      Int
   category    String
   bill        String?
-  amount      Float 
+  amount      Float
   description String?
   date        DateTime @default(now())
-  
-  user       User     @relation(fields: [userId], references: [id])
+
+  user User @relation(fields: [userId], references: [id])
 }

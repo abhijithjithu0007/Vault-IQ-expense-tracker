@@ -19,7 +19,7 @@ export function Alltransaction() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl p-4 font-bold">Order</h1>
+        <h1 className="text-2xl p-4 font-bold">All transactions</h1>
         <div className="flex gap-2">
           <div className="relative flex-grow">
             <Input
@@ -54,8 +54,8 @@ export function Alltransaction() {
             <tr>
               <th className="px-6 py-3 text-left">Category</th>
               <th className="px-6 py-3 text-left">Amount</th>
-              <th className="px-6 py-3 text-left">Date</th>
-              <th className="px-6 py-3 text-left">Status</th>
+              <th className="px-6 py-3 text-left">Date & Time</th>
+              <th className="px-6 py-3 text-left">Type</th>
             </tr>
           </thead>
           <tbody className="divide-y">

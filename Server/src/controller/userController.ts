@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
 export const getUser = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
 
-  const cacheKey = `user_details:"${userId}"`;
+  const cacheKey = `user_details:${userId}`;
 
   const user = await getOrSetCache(cacheKey, 3600, async () => {
     return await prisma.user.findUnique({ where: { id: userId } });

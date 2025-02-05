@@ -32,7 +32,7 @@ const Dashboard = ({ user }: { user: User }) => {
             </div>
           </div>
 
-          <div className="bg-white pb-4 rounded-lg shadow-md flex justify-center">
+          <div className="flex justify-center">
             <Addnew />
           </div>
         </div>
