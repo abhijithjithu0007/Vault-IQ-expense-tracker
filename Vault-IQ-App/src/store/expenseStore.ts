@@ -1,4 +1,9 @@
-import { addExpense, addUserIncome, deleteExpense } from "@/api/expenseService";
+import {
+  addExpense,
+  addUserIncome,
+  deleteExpense,
+  updateExpense,
+} from "@/api/expenseService";
 import { create } from "zustand";
 
 interface Expense {
@@ -20,6 +25,12 @@ interface Expense {
   ) => Promise<{ message: string; type: string }>;
   addIncome: (amount: number) => Promise<{ message: string; type: string }>;
   deleteExpense: (id: number) => Promise<{ message: string; type: string }>;
+  updateExpense: (
+    id: number,
+    category: string,
+    amount: number,
+    description: string
+  ) => Promise<{ message: string; type: string }>;
   clearError: () => void;
 }
 
@@ -68,6 +79,14 @@ export const useExpenseStore = create<Expense>((set) => ({
   deleteExpense: async (id) => {
     try {
       const data = await deleteExpense(id);
+      return { message: data.message, type: "success" };
+    } catch (err: any) {
+      return { message: err.message, type: "error" };
+    }
+  },
+  updateExpense: async (id, category, amount, description) => {
+    try {
+      const data = await updateExpense(id, category, amount, description);
       return { message: data.message, type: "success" };
     } catch (err: any) {
       return { message: err.message, type: "error" };

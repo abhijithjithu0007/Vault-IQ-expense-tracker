@@ -30,3 +30,17 @@ export const deleteExpense = async (id: number) => {
   const res = await axiosInstance.delete(`/expense/delete-expense/${id}`);
   return res.data;
 };
+
+export const updateExpense = async (
+  id: number,
+  category: string,
+  amount: number,
+  description: string
+) => {
+  const res = await axiosInstance.patch(`/expense/update-expense/${id}`, {
+    category,
+    amount,
+    description,
+  });
+  return res.data;
+};

@@ -1,4 +1,3 @@
-import { getExpenses } from "@/api/expenseService";
 import { Input } from "@/components/ui/input";
 import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import {
@@ -18,10 +17,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteExpense } from "./delete-expense";
+import Updateexpense from "./update-expense";
+
 export function Alltransaction() {
   const { data } = useQuery<Expense, Error>({
     queryKey: ["expenses"],
-    queryFn: getExpenses,
   });
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -98,7 +98,9 @@ export function Alltransaction() {
                       <PiDotsThreeCircleVertical size={20} />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        <Updateexpense expense={order} />
+                      </DropdownMenuItem>
                       <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                         <DeleteExpense expenseId={order.id} />
                       </DropdownMenuItem>
