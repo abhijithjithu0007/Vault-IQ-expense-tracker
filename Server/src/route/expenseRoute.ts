@@ -4,9 +4,11 @@ import { validateData } from "../middleware/zodValidation";
 import { errorCatch } from "../utils/errors/errorCatch";
 import { expenseSchema } from "../utils/validation";
 import {
+  addCategory,
   addExpense,
   addUserIncome,
   deleteExpense,
+  getCategory,
   getExpenses,
   updateExpense,
 } from "../controller/expenseController";
@@ -25,4 +27,6 @@ router.get("/get-expenses", verifyToken, errorCatch(getExpenses));
 router.post("/add-income", verifyToken, errorCatch(addUserIncome));
 router.delete("/delete-expense/:id", verifyToken, errorCatch(deleteExpense));
 router.patch("/update-expense/:id", verifyToken, errorCatch(updateExpense));
+router.post("/add-category", verifyToken, errorCatch(addCategory));
+router.get("/get-category", verifyToken, errorCatch(getCategory));
 export default router;

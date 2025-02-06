@@ -14,10 +14,9 @@ interface SelectCurrencyProps {
 
 export function SelectCurrency({ value, onChange }: SelectCurrencyProps) {
   const currencyOptions = [
-    { value: "INR", label: "INR - Indian Rupee" },
-    { value: "USD", label: "USD - United States Dollar" },
-    { value: "EUR", label: "EUR - Euro" },
-    { value: "SAR", label: "SAR - Saudi Riyal" },
+    { value: "₹", label: "INR - Indian Rupee" },
+    { value: "$", label: "USD - United States Dollar" },
+    { value: "Є", label: "EUR - Euro" },
   ];
 
   return (

@@ -105,3 +105,48 @@ export const updateExpense = async (req: CustomRequest, res: Response) => {
 
   res.status(200).json(new StandardResponse("Expense updated", updatedExpense));
 };
+
+export const addCategory = async (req: CustomRequest, res: Response) => {
+  const { name } = req.body;
+  const userId = req.user?.id;
+  if (!userId) {
+    res.status(401).json(new StandardResponse("Unauthorized", null));
+    return;
+  }
+  const category = await prisma.category.create({
+    data: {
+      name: name,
+      userId: userId,
+    },
+  });
+  res.status(201).json(new StandardResponse("Category added", category));
+};
+
+export const getCategory = async (req: CustomRequest, res: Response) => {
+  const userId = req.user?.id;
+  if (!userId) {
+    res.status(401).json(new StandardResponse("Unauthorized", null));
+    return;
+  }
+  const categories = await prisma.category.findMany({
+    where: { userId: userId },
+  });
+  const defaultCategories = [
+    "Car",
+    "Bus",
+    "Groceries",
+    "Food",
+    "Gas",
+    "Housing",
+    "Medical",
+    "Personal",
+  ];
+  res
+    .status(200)
+    .json(
+      new StandardResponse("Categories retrieved", {
+        categories,
+        defaultCategories,
+      })
+    );
+};
