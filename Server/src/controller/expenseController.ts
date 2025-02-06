@@ -119,6 +119,7 @@ export const addCategory = async (req: CustomRequest, res: Response) => {
       userId: userId,
     },
   });
+  await redisClient.del(`user_category:${userId}`);
   res.status(201).json(new StandardResponse("Category added", category));
 };
 
@@ -128,9 +129,14 @@ export const getCategory = async (req: CustomRequest, res: Response) => {
     res.status(401).json(new StandardResponse("Unauthorized", null));
     return;
   }
-  const categories = await prisma.category.findMany({
-    where: { userId: userId },
+  const cacheKey = `user_category:${userId}`;
+
+  const categories = await getOrSetCache(cacheKey, 3600, async () => {
+    return await prisma.category.findMany({
+      where: { userId: userId },
+    });
   });
+
   const defaultCategories = [
     "Car",
     "Bus",
@@ -141,12 +147,11 @@ export const getCategory = async (req: CustomRequest, res: Response) => {
     "Medical",
     "Personal",
   ];
-  res
-    .status(200)
-    .json(
-      new StandardResponse("Categories retrieved", {
-        categories,
-        defaultCategories,
-      })
-    );
+
+  res.status(200).json(
+    new StandardResponse("Categories retrieved", {
+      categories,
+      defaultCategories,
+    })
+  );
 };
