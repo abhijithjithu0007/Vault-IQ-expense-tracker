@@ -1,4 +1,5 @@
 import {
+  addCategory,
   addExpense,
   addUserIncome,
   deleteExpense,
@@ -30,6 +31,9 @@ interface Expense {
     category: string,
     amount: number,
     description: string
+  ) => Promise<{ message: string; type: string }>;
+  addExpenseCategory: (
+    name: string
   ) => Promise<{ message: string; type: string }>;
   clearError: () => void;
 }
@@ -87,6 +91,14 @@ export const useExpenseStore = create<Expense>((set) => ({
   updateExpense: async (id, category, amount, description) => {
     try {
       const data = await updateExpense(id, category, amount, description);
+      return { message: data.message, type: "success" };
+    } catch (err: any) {
+      return { message: err.message, type: "error" };
+    }
+  },
+  addExpenseCategory: async (name) => {
+    try {
+      const data = await addCategory(name);
       return { message: data.message, type: "success" };
     } catch (err: any) {
       return { message: err.message, type: "error" };

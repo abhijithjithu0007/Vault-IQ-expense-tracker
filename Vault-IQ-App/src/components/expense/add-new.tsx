@@ -22,6 +22,19 @@ import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { useExpenseStore } from "@/store/expenseStore";
 import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/api/expenseService";
+
+interface Category {
+  data: {
+    categories: [
+      {
+        id: number;
+        name: string;
+      }
+    ];
+    defaultCategories: string[];
+  };
+}
 
 export function Addnew() {
   const [currentTransaction, setCurrentTransaction] = useState<string>("");
@@ -57,6 +70,15 @@ export function Addnew() {
       refetchUser();
     }
   };
+
+  const { data } = useQuery<Category, Error>({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+  });
+
+  const filterCatagory = data?.data.categories
+    .map((item) => item.name)
+    .concat(data?.data.defaultCategories);
 
   return (
     <Dialog>
@@ -100,16 +122,11 @@ export function Addnew() {
                   <SelectGroup>
                     <Addexpensecategory />
                   </SelectGroup>
-                  <SelectGroup>
-                    <SelectItem value="Bus">Bus</SelectItem>
-                    <SelectItem value="Car">Car</SelectItem>
-                    <SelectItem value="Food">Food</SelectItem>
-                    <SelectItem value="Gas">Gas</SelectItem>
-                    <SelectItem value="Groceries">Groceries</SelectItem>
-                    <SelectItem value="Housing">Housing</SelectItem>
-                    <SelectItem value="Medical">Medical</SelectItem>
-                    <SelectItem value="Personal">Personal</SelectItem>
-                  </SelectGroup>
+                  {filterCatagory?.map((item, ind) => (
+                    <SelectGroup key={ind}>
+                      <SelectItem value={item}>{item}</SelectItem>
+                    </SelectGroup>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

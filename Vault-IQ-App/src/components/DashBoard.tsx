@@ -14,20 +14,28 @@ const Dashboard = ({ user }: { user: User }) => {
             <div className="flex justify-around">
               <div className="text-center p-6">
                 <p className="text-sm font-medium">Income</p>
-                <h1 className="text-2xl font-bold mt-2">
+                <h1 className="text-2xl font-bold mt-2 flex gap-1 items-center">
+                  <span className="text-gray-600 font-semibold text-sm">
+                    {user.data.currency}
+                  </span>
                   {user.data.totalAmount}
                 </h1>
               </div>
               <div className="text-center p-6">
                 <p className="text-sm font-medium">Balance</p>
-                <h1 className="text-2xl font-bold mt-2">
-                  {" "}
+                <h1 className="text-2xl font-bold mt-2 flex gap-1 items-center">
+                  <span className="text-gray-600 font-semibold text-sm">
+                    {user.data.currency}
+                  </span>{" "}
                   {user.data.totalAmount - user.data.currentExpense}
                 </h1>
               </div>
               <div className="text-center p-6">
                 <p className="text-sm font-medium">Expenses</p>
-                <h1 className="text-2xl font-bold text-red-500 mt-2">
+                <h1 className="text-2xl font-bold text-red-500 mt-2 flex gap-1 items-center">
+                  <span className="text-gray-600 font-semibold text-sm">
+                    {user.data.currency}
+                  </span>
                   {user.data.currentExpense}
                 </h1>
               </div>

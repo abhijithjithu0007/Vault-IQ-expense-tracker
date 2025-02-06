@@ -44,3 +44,13 @@ export const updateExpense = async (
   });
   return res.data;
 };
+
+export const getCategories = async () => {
+  const res = await axiosInstance.get("/expense/get-category");
+  return res.data;
+};
+
+export const addCategory = async (name: string) => {
+  const res = await axiosInstance.post("/expense/add-category", { name });
+  return res.data;
+};
