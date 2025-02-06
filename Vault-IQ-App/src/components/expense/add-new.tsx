@@ -83,12 +83,18 @@ export function Addnew() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          className="rounded-full p-4 flex items-center justify-center"
-        >
-          + New
-        </Button>
+        <div className="relative">
+          <div className="absolute -inset-5">
+            <div className="w-full h-full max-w-sm mx-auto lg:mx-0 opacity-60 blur-lg bg-gradient-to-r from-[#f0e347] via-violet-300 to-[#abe2c2]"></div>
+          </div>
+          <a
+            title=""
+            className="relative z-10 inline-flex items-center justify-center w-full px-5 py-2 text-sm font-bold text-white transition-all duration-200 bg-gray-900 border-2 border-transparent sm:w-auto rounded-xl font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+            role="button"
+          >
+            + Add new transaction
+          </a>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>

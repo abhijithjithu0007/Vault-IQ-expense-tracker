@@ -63,7 +63,6 @@ export function Alltransaction() {
               <th className="px-6 py-3 text-left">Category</th>
               <th className="px-6 py-3 text-left">Amount</th>
               <th className="px-6 py-3 text-left">Date & Time</th>
-              <th className="px-6 py-3 text-left">Type</th>
               <th className="px-6 py-3 text-left">Manage</th>
             </tr>
           </thead>
@@ -88,11 +87,7 @@ export function Alltransaction() {
                   {new Date(order.date).toLocaleDateString()} -
                   {new Date(order.date).toLocaleTimeString()}
                 </td>
-                <td className="px-6 py-4">
-                  <span className="px-2 py-1 rounded-full text-sm bg-orange-100 text-orange-600">
-                    Expense
-                  </span>
-                </td>
+
                 <td className="px-11 py-4">
                   <DropdownMenu modal={false}>
                     <DropdownMenuTrigger>

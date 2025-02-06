@@ -6,20 +6,16 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = useAuthStore((state) => state.login);
-  const message = useAuthStore((state) => state.message);
-  const status = useAuthStore((state) => state.status);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, password);
+    const response = await login(email, password);
+    alert(response.message);
+    if (response.type === "success") navigate("/");
   };
-  useEffect(() => {
-    if (status === 200) {
-      alert(message);
-      navigate("/");
-    }
-  }, [status, message]);
+
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700">
       <h1 className="font-bold text-2xl">{`Welcome Back :)`}</h1>

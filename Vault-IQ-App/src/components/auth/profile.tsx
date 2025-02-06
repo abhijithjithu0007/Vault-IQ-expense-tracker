@@ -20,10 +20,10 @@ export function Profile() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex text-white font-semibold p-3 gap-2">
+        <p className="flex text-white text-sm font-semibold items-center gap-3 hover:text-black">
           <MdManageAccounts size={25} />
           Account
-        </button>
+        </p>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

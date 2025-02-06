@@ -7,24 +7,17 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [currency, setCurrency] = useState("INR"); // Default currency
+  const [currency, setCurrency] = useState("INR");
 
   const register = useAuthStore((state) => state.register);
-  const message = useAuthStore((state) => state.message);
-  const status = useAuthStore((state) => state.status);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await register(name, email, password, currency); // Pass currency to register function
+    const response = await register(name, email, password, currency);
+    alert(response.message);
+    if (response.type === "success") navigate("/");
   };
-
-  useEffect(() => {
-    if (status === 200) {
-      alert(message);
-      navigate("/");
-    }
-  }, [status, message]);
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700">

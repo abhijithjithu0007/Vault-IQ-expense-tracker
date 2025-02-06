@@ -6,38 +6,35 @@ const Dashboard = ({ user }: { user: User }) => {
   return (
     <div className="h-screen  w-full p-3">
       <div className="flex gap-6">
-        <div className="bg-white p-6 w-1/2 space-y-6 shadow-md rounded-lg">
-          <div className="flex justify-around p-4 rounded-lg shadow-md bg-sky-500 text-white">
-            <h1 className="text-xl font-bold">Hello, {user.data.name}!</h1>
-          </div>
+        <div className="bg-white p-6 w-1/2 space-y-10 shadow-md rounded-lg">
           <div>
-            <div className="flex justify-around">
-              <div className="text-center p-6">
-                <p className="text-sm font-medium">Income</p>
+            <div className="flex justify-around gap-4">
+              <div className="text-center p-6 bg-[#f0e347] rounded-3xl  w-1/3">
                 <h1 className="text-2xl font-bold mt-2 flex gap-1 items-center">
-                  <span className="text-gray-600 font-semibold text-sm">
+                  <span className="text-gray-600 font-semibold text-lg">
                     {user.data.currency}
                   </span>
                   {user.data.totalAmount}
                 </h1>
+                <p className="text-xs text-start font-medium mt-2">Income</p>
               </div>
-              <div className="text-center p-6">
-                <p className="text-sm font-medium">Balance</p>
-                <h1 className="text-3xl font-bold mt-2 flex gap-1 items-center">
-                  <span className="text-gray-600 font-semibold text-sm">
+              <div className="text-center p-6 bg-[#f0e3ff] rounded-3xl w-1/3">
+                <h1 className="text-2xl font-bold mt-2 flex gap-1 items-center">
+                  <span className="text-gray-600 font-semibold text-lg">
                     {user.data.currency}
                   </span>{" "}
                   {user.data.totalAmount - user.data.currentExpense}
                 </h1>
+                <p className="text-xs text-start font-medium mt-2">Balance</p>
               </div>
-              <div className="text-center p-6">
-                <p className="text-sm font-medium">Expenses</p>
-                <h1 className="text-2xl font-bold text-red-500 mt-2 flex gap-1 items-center">
-                  <span className="text-gray-600 font-semibold text-sm">
+              <div className="text-center p-6 bg-[#abe2c2] rounded-3xl  w-1/3">
+                <h1 className="text-2xl font-bold mt-2 flex gap-1 items-center">
+                  <span className="text-gray-600 font-semibold text-lg">
                     {user.data.currency}
                   </span>
                   {user.data.currentExpense}
                 </h1>
+                <p className="text-xs text-start font-medium mt-2">Expenses</p>
               </div>
             </div>
           </div>

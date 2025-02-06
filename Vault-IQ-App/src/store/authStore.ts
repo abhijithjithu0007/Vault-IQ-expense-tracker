@@ -6,22 +6,23 @@ interface AuthState {
   loading: boolean;
   error: string | null;
   status: number | null;
-  message: string | null;
   currency: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<{ message: string; type: string }>;
   register: (
     name: string,
     email: string,
     password: string,
     currency: string
-  ) => Promise<void>;
+  ) => Promise<{ message: string; type: string }>;
   clearError: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   loading: false,
-  message: null,
   error: null,
   status: null,
   currency: null,
@@ -31,12 +32,13 @@ export const useAuthStore = create<AuthState>((set) => ({
       const data = await loginUser(email, password);
       set({
         user: data.data.token,
-        message: data.message,
         status: data.statusCode,
         loading: false,
       });
+      return { message: data.message, type: "success" };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
+      return { message: err.message, type: "error" };
     }
   },
 
@@ -46,13 +48,13 @@ export const useAuthStore = create<AuthState>((set) => ({
       const data = await registerUser(name, email, password, currency);
       set({
         user: data.data.token,
-        message: data.message,
         status: data.statusCode,
         loading: false,
       });
-      console.log(data);
+      return { message: data.message, type: "success" };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
+      return { message: err.message, type: "error" };
     }
   },
 
