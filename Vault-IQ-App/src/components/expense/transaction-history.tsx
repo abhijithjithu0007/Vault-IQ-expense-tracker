@@ -1,5 +1,6 @@
 import { getExpenses } from "@/api/expenseService";
 import { useQuery } from "@tanstack/react-query";
+import CategoryIcon from "../category-icon";
 
 export interface Expense {
   data: [
@@ -13,7 +14,7 @@ export interface Expense {
     }
   ];
 }
-export const RecnetTransactions = () => {
+export const RecentTransactions = () => {
   const { data } = useQuery<Expense, Error>({
     queryKey: ["expenses"],
     queryFn: getExpenses,
@@ -40,7 +41,9 @@ export const RecnetTransactions = () => {
             <tr key={transaction.id} className="border-b hover:bg-gray-50">
               <td className="py-4">
                 <div className="flex items-center gap-4">
-                  <img src="" className="w-8 h-8 rounded-full" />
+                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+                    <CategoryIcon category={transaction.category} />
+                  </div>{" "}
                   <div>
                     <p className="text-sm font-medium text-gray-800">
                       {transaction.category}

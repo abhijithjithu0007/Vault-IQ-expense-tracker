@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteExpense } from "./delete-expense";
 import Updateexpense from "./update-expense";
+import CategoryIcon from "../category-icon";
 
 export function Alltransaction() {
   const { data } = useQuery<Expense, Error>({
@@ -71,8 +72,8 @@ export function Alltransaction() {
               <tr key={order.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <span className="text-purple-600 text-sm">P</span>
+                    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+                      <CategoryIcon category={order.category} />
                     </div>
                     <div>
                       <div className="font-medium">{order.category}</div>

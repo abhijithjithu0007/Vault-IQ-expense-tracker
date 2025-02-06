@@ -1,6 +1,6 @@
 import { Addnew } from "@/components/expense/add-new";
 import IncomeChart from "./ChartSquare";
-import { RecnetTransactions } from "./expense/transaction-history";
+import { RecentTransactions } from "./expense/transaction-history";
 import { User } from "@/components/Sidebar";
 const Dashboard = ({ user }: { user: User }) => {
   return (
@@ -23,7 +23,7 @@ const Dashboard = ({ user }: { user: User }) => {
               </div>
               <div className="text-center p-6">
                 <p className="text-sm font-medium">Balance</p>
-                <h1 className="text-2xl font-bold mt-2 flex gap-1 items-center">
+                <h1 className="text-3xl font-bold mt-2 flex gap-1 items-center">
                   <span className="text-gray-600 font-semibold text-sm">
                     {user.data.currency}
                   </span>{" "}
@@ -53,7 +53,7 @@ const Dashboard = ({ user }: { user: User }) => {
       </div>
 
       <div className="bg-white p-6 shadow-md rounded-lg mt-6">
-        <RecnetTransactions />
+        <RecentTransactions />
       </div>
     </div>
   );
