@@ -17,10 +17,10 @@ export function SetNotification() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" className="p-0 flex gap-4 hover:bg-transparent">
-          <IoNotificationsSharp size={30} />
+        <p className="flex text-sm font-semibold items-center gap-3 ">
+          <IoNotificationsSharp size={20} />
           Notifications
-        </Button>
+        </p>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

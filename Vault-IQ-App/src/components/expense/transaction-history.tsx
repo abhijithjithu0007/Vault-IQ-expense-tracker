@@ -39,7 +39,7 @@ export const RecentTransactions = () => {
         <tbody>
           {limitedData?.map((transaction) => (
             <tr key={transaction.id} className="border-b hover:bg-gray-50">
-              <td className="py-4">
+              <td className="py-3">
                 <div className="flex items-center gap-4">
                   <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
                     <CategoryIcon category={transaction.category} />
@@ -54,14 +54,14 @@ export const RecentTransactions = () => {
                   </div>
                 </div>
               </td>
-              <td className="py-4 text-sm text-gray-700">expense</td>
-              <td className="py-4 text-sm text-gray-700">
+              <td className="py-3 text-sm text-gray-700">Expense</td>
+              <td className="py-3 text-sm text-gray-700">
                 <p className="text-xs text-gray-500">
                   {new Date(transaction.date).toLocaleDateString()}
                 </p>{" "}
                 <p>{new Date(transaction.date).toLocaleTimeString()}</p>
               </td>
-              <td className="py-4 text-sm font-medium text-gray-800">
+              <td className="py-3 text-sm font-medium text-gray-800">
                 {transaction.amount}
               </td>
             </tr>

@@ -30,13 +30,9 @@ const Sidebar = () => {
   return (
     <div className="flex w-full gap-5 p-3 h-screen">
       <aside className="flex flex-col rounded-xl w-64 h-full px-5 py-8 overflow-y-auto bg-gradient-to-br from-[#931be3] to-indigo-600 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 shadow-lg">
-        <a href="#" className="flex justify-center">
-          <img
-            className="w-auto h-7"
-            src="https://merakiui.com/images/logo.svg"
-            alt="Logo"
-          />
-        </a>
+        <p className="flex text-2xl font-serif text-white font-bold justify-center">
+          Hi, {data?.data.name}
+        </p>
 
         <div className="flex flex-col justify-between flex-1 mt-8">
           <nav className="-mx-3 space-y-3">

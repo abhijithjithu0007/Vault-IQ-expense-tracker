@@ -20,12 +20,12 @@ export function Profile() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <p className="flex text-white text-sm font-semibold items-center gap-3 hover:text-black">
+        <p className="flex text-sm font-semibold items-center gap-3">
           <MdManageAccounts size={25} />
           Account
         </p>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] rounded-none">
         <DialogHeader>
           <DialogTitle className="text-center">Your Profile</DialogTitle>
         </DialogHeader>
