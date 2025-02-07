@@ -19,11 +19,44 @@ import {
 import { DeleteExpense } from "./delete-expense";
 import Updateexpense from "./update-expense";
 import CategoryIcon from "../category-icon";
+import { filterExpenses, searchExpenses } from "@/api/expenseService";
+import { useEffect, useState } from "react";
+
+let debounceTimer: NodeJS.Timeout;
 
 export function Alltransaction() {
+  const [filterVal, setFilterVal] = useState<string>("Newest");
+  const [searchValue, setSearchValue] = useState<Expense | null>(null);
+  const [filterItems, setFilterItems] = useState<Expense | null>(null);
   const { data } = useQuery<Expense, Error>({
     queryKey: ["expenses"],
   });
+
+  const handleSearch = async (search: string) => {
+    if (search.trim()) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async () => {
+        const resp = await searchExpenses(search);
+        setSearchValue(resp);
+        setFilterItems(null);
+      }, 800);
+    } else {
+      setSearchValue(null);
+    }
+  };
+
+  useEffect(() => {
+    const filter = async () => {
+      const resp = await filterExpenses(filterVal);
+      setFilterItems(resp);
+      setSearchValue(null);
+    };
+    filter();
+  }, [filterVal]);
+
+  const displayData =
+    searchValue?.data || filterItems?.data || data?.data || [];
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-6">
@@ -32,6 +65,7 @@ export function Alltransaction() {
           <div className="relative flex-grow">
             <Input
               type="text"
+              onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search Transaction"
               className="bg-white w-[400px] px-4 py-2 pl-10 border rounded-lg"
             />
@@ -41,15 +75,15 @@ export function Alltransaction() {
             />
           </div>
           <div className="flex items-center">
-            <Select>
+            <Select onValueChange={setFilterVal}>
               <SelectTrigger className="w-[125px] bg-white">
                 <Filter size={18} />
                 Filter{" "}
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="Credit">Credit</SelectItem>
-                  <SelectItem value="Debit">Debit</SelectItem>
+                  <SelectItem value="Newest">Newest</SelectItem>
+                  <SelectItem value="Oldest">Oldest</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -67,7 +101,7 @@ export function Alltransaction() {
             </tr>
           </thead>
           <tbody className="divide-y">
-            {data?.data.map((order) => (
+            {displayData.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
@@ -87,7 +121,6 @@ export function Alltransaction() {
                   {new Date(order.date).toLocaleDateString()} -
                   {new Date(order.date).toLocaleTimeString()}
                 </td>
-
                 <td className="px-11 py-4">
                   <DropdownMenu modal={false}>
                     <DropdownMenuTrigger>

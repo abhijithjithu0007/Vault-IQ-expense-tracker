@@ -34,5 +34,9 @@ router.get("/get-category", verifyToken, errorCatch(getCategory));
 
 router.get("/search-expense/:search", verifyToken, errorCatch(searchExpenses));
 
-router.get("/filter-expense", verifyToken, errorCatch(filterExpenses));
+router.get(
+  "/filter-expense/:filterVal",
+  verifyToken,
+  errorCatch(filterExpenses)
+);
 export default router;

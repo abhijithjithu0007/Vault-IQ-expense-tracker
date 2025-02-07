@@ -54,3 +54,13 @@ export const addCategory = async (name: string) => {
   const res = await axiosInstance.post("/expense/add-category", { name });
   return res.data;
 };
+
+export const searchExpenses = async (search: string) => {
+  const res = await axiosInstance.get(`/expense/search-expense/${search}`);
+  return res.data;
+};
+
+export const filterExpenses = async (filterVal: string) => {
+  const res = await axiosInstance.get(`/expense/filter-expense/${filterVal}`);
+  return res.data;
+};

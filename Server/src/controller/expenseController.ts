@@ -180,7 +180,7 @@ export const searchExpenses = async (req: CustomRequest, res: Response) => {
 };
 
 export const filterExpenses = async (req: CustomRequest, res: Response) => {
-  const { filterVal } = req.body;
+  const { filterVal } = req.params;
   const userId = req.user?.id;
   if (!userId) {
     res.status(401).json(new StandardResponse("Unauthorized", null));
