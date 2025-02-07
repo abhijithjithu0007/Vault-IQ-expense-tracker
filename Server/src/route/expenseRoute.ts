@@ -8,8 +8,10 @@ import {
   addExpense,
   addUserIncome,
   deleteExpense,
+  filterExpenses,
   getCategory,
   getExpenses,
+  searchExpenses,
   updateExpense,
 } from "../controller/expenseController";
 import { verifyToken } from "../middleware/verifyToken";
@@ -29,4 +31,8 @@ router.delete("/delete-expense/:id", verifyToken, errorCatch(deleteExpense));
 router.patch("/update-expense/:id", verifyToken, errorCatch(updateExpense));
 router.post("/add-category", verifyToken, errorCatch(addCategory));
 router.get("/get-category", verifyToken, errorCatch(getCategory));
+
+router.get("/search-expense/:search", verifyToken, errorCatch(searchExpenses));
+
+router.get("/filter-expense", verifyToken, errorCatch(filterExpenses));
 export default router;

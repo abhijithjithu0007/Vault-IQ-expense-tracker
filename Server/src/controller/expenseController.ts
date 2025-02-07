@@ -155,3 +155,49 @@ export const getCategory = async (req: CustomRequest, res: Response) => {
     })
   );
 };
+
+export const searchExpenses = async (req: CustomRequest, res: Response) => {
+  const { search } = req.params;
+
+  const userId = req.user?.id;
+  if (!userId) {
+    res.status(401).json(new StandardResponse("Unauthorized", null));
+    return;
+  }
+  const trimmedSearch = search.trim().toLowerCase();
+
+  const expenses = await prisma.expense.findMany({
+    where: {
+      userId,
+      OR: [
+        { category: { startsWith: trimmedSearch } },
+        { description: { contains: trimmedSearch } },
+      ],
+    },
+  });
+
+  res.status(200).json(new StandardResponse("Expenses retrieved", expenses));
+};
+
+export const filterExpenses = async (req: CustomRequest, res: Response) => {
+  const { filterVal } = req.body;
+  const userId = req.user?.id;
+  if (!userId) {
+    res.status(401).json(new StandardResponse("Unauthorized", null));
+    return;
+  }
+
+  if (filterVal === "Newest") {
+    const expenses = await prisma.expense.findMany({
+      where: { userId },
+      orderBy: { date: "desc" },
+    });
+    res.status(200).json(new StandardResponse("Expenses retrieved", expenses));
+  } else if (filterVal === "Oldest") {
+    const expenses = await prisma.expense.findMany({
+      where: { userId },
+      orderBy: { date: "asc" },
+    });
+    res.status(200).json(new StandardResponse("Expenses retrieved", expenses));
+  }
+};
