@@ -15,3 +15,8 @@ export const expenseSchema = z.object({
   amount: z.number().positive("Amount must be a positive number"),
   description: z.string().optional(),
 });
+
+export const budgetSchema = z.object({
+  category: z.string().min(1, "Category is required"),
+  amount: z.number().positive("Amount must be a positive number"),
+});

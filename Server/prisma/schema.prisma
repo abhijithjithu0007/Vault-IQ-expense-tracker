@@ -17,6 +17,7 @@ model User {
   currency       String     @default("₹")
   expenses       Expense[]
   Category       Category[]
+  Budget         Budget[]
 }
 
 model Expense {
@@ -36,4 +37,13 @@ model Category {
   name   String
   userId Int
   user   User   @relation(fields: [userId], references: [id])
+}
+
+model Budget {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  category String
+  amount   Int
+
+  user User @relation(fields: [userId], references: [id])
 }

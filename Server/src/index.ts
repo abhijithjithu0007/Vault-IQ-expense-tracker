@@ -5,8 +5,8 @@ import pool from "./config/db";
 import { PoolConnection } from "mysql2/promise";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import expenseRoute from "./route/expenseRoute";
+import budgetRoute from "./route/budgetRoute";
 import userRoute from "./route/userRoute";
-import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -16,10 +16,10 @@ const port = process.env.PORT || 5000;
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 app.use("/api/expense", expenseRoute);
 app.use("/api/user", userRoute);
+app.use("/api/budget", budgetRoute);
 app.use(globalErrorHandler);
 pool
   .getConnection()
