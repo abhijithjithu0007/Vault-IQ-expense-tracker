@@ -1,7 +1,6 @@
 import { Addnew } from "@/components/expense/add-new";
 import { RecentTransactions } from "./expense/transaction-history";
 import { User } from "@/components/Sidebar";
-import PieChartComponent from "./ChartSquare";
 import ChartSquare from "./ChartSquare";
 const Dashboard = ({ user }: { user: User }) => {
   return (

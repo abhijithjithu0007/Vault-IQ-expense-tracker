@@ -24,7 +24,7 @@ import { useExpenseStore } from "@/store/expenseStore";
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/api/expenseService";
 
-interface Category {
+export interface Category {
   data: {
     categories: [
       {

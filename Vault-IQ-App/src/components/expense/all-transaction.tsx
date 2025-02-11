@@ -103,8 +103,8 @@ export function Alltransaction() {
           <tbody className="divide-y">
             {displayData.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
+                <td className="px-6 py-3">
+                  <div className="flex items-center gap-8">
                     <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
                       <CategoryIcon category={order.category} />
                     </div>
@@ -116,12 +116,14 @@ export function Alltransaction() {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4">{order.amount}</td>
-                <td className="px-6 py-4 text-sm text-gray-700">
+                <td className="px-6 font-semibold italic py-3">
+                  {order.amount}
+                </td>
+                <td className="px-6 py-3 text-sm text-gray-700">
                   {new Date(order.date).toLocaleDateString()} -
                   {new Date(order.date).toLocaleTimeString()}
                 </td>
-                <td className="px-11 py-4">
+                <td className="px-11 py-3">
                   <DropdownMenu modal={false}>
                     <DropdownMenuTrigger>
                       <PiDotsThreeCircleVertical size={20} />

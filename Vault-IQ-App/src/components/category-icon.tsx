@@ -13,33 +13,11 @@ interface CategoryIconProps {
   category: string;
   size?: number;
   className?: string;
-  useCustomColors?: boolean;
 }
 
-const categoryColors = {
-  Car: "text-blue-500",
-  Bus: "text-purple-400",
-  Groceries: "text-green-400",
-  Food: "text-orange-500",
-  Gas: "text-red-500",
-  Housing: "text-indigo-500",
-  Medical: "text-rose-500",
-  Personal: "text-gray-500",
-};
-
-export const CategoryIcon = ({
-  category,
-  size = 24,
-  className,
-  useCustomColors = true,
-}: CategoryIconProps) => {
-  const iconColor = useCustomColors
-    ? categoryColors[category as keyof typeof categoryColors] || "text-gray-600"
-    : className || "text-gray-600";
-
+export const CategoryIcon = ({ category, size = 24 }: CategoryIconProps) => {
   const iconProps = {
     size,
-    className: iconColor,
   };
 
   switch (category) {

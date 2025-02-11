@@ -11,7 +11,7 @@ const ChartSquare = ({ user }: { user: User }) => {
     },
   ];
 
-  const COLORS = ["#4682B4", "#5F9EA0", "#1E90FF"];
+  const COLORS = ["#4682B4", "#cc082c", "#1E90FF"];
   return (
     <div className="flex flex-col items-center justify-center p-2">
       <div className="relative">

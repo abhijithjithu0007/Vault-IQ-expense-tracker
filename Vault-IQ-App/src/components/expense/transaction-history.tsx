@@ -40,7 +40,7 @@ export const RecentTransactions = () => {
           {limitedData?.map((transaction) => (
             <tr key={transaction.id} className="border-b hover:bg-gray-50">
               <td className="py-3">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-8">
                   <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
                     <CategoryIcon category={transaction.category} />
                   </div>{" "}
