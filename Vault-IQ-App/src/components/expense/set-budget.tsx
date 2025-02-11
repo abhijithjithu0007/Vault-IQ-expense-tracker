@@ -22,8 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useBudgetStore } from "@/store/budgetStore";
+import { useState } from "react";
 
 export function SetNotification() {
+  const [category, setCategory] = useState<string>("");
+  const [amount, setAmount] = useState<number | undefined>();
+  const addBudget = useBudgetStore((state) => state.addBudget);
   const { data } = useQuery<Category, Error>({
     queryKey: ["categories"],
   });
@@ -31,6 +36,12 @@ export function SetNotification() {
   const filterCatagory = data?.data.categories
     .map((item) => item.name)
     .concat(data?.data.defaultCategories);
+
+  const handleSetBudget = async () => {
+    const { message } = await addBudget(category, amount!);
+    alert(message);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -47,14 +58,13 @@ export function SetNotification() {
             autoPlay
             loop
             muted
-            className="w-full h-[225px]"
+            className="w-full h-[135px]"
           />{" "}
         </SheetHeader>
         <SheetHeader>
           <SheetTitle>Set Budget</SheetTitle>
-          <SheetDescription>
-            Create a budget for your expenses, when you reach the budget we will
-            notify you.
+          <SheetDescription className="text-xs">
+            Set a budget for expenses; get notified when you reach it.
           </SheetDescription>
         </SheetHeader>
 
@@ -63,13 +73,18 @@ export function SetNotification() {
             <Label htmlFor="Amount" className="text-right">
               Amount
             </Label>
-            <Input id="number" type="number" className="col-span-3" />
+            <Input
+              onChange={(e) => setAmount(parseFloat(e.target.value))}
+              id="number"
+              type="number"
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">
               Category
             </Label>
-            <Select>
+            <Select onValueChange={setCategory}>
               <SelectTrigger className="w-[250px]">
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
@@ -85,7 +100,9 @@ export function SetNotification() {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Submit</Button>
+            <Button onClick={handleSetBudget} type="submit">
+              Add
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

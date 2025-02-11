@@ -34,6 +34,26 @@ export const getExpenses = async (req: CustomRequest, res: Response) => {
 export const addExpense = async (req: CustomRequest, res: Response) => {
   const parsedData = expenseSchema.parse(req.body);
   const { category, amount, description } = parsedData;
+
+  const budget = await prisma.budget.findFirst({
+    where: { userId: req.user!.id, category },
+  });
+
+  let isExceeded = false;
+  if (budget) {
+    const totalSpent = await prisma.expense.aggregate({
+      where: { userId: req.user!.id, category },
+      _sum: { amount: true },
+    });
+
+    const spentSoFar = totalSpent._sum.amount || 0;
+    const newTotal = spentSoFar + amount;
+
+    if (newTotal >= budget.amount * 0.9) {
+      isExceeded = true;
+    }
+  }
+
   const expense = await prisma.expense.create({
     data: {
       userId: req.user!.id,
@@ -46,16 +66,16 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
   await prisma.user.update({
     where: { id: req.user!.id },
     data: {
-      currentExpense: {
-        increment: amount,
-      },
+      currentExpense: { increment: amount },
     },
   });
 
   await redisClient.del(`user_expenses:${req.user?.id}`);
   await redisClient.del(`user_details:${req.user?.id}`);
 
-  res.status(201).json(new StandardResponse("Expense added", expense));
+  res
+    .status(201)
+    .json(new StandardResponse("Expense added", { expense, isExceeded }));
 };
 
 export const deleteExpense = async (req: CustomRequest, res: Response) => {

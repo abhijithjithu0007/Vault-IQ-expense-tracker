@@ -3,7 +3,7 @@ import { RiDashboard3Line } from "react-icons/ri";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { Alltransaction } from "@/components/expense/all-transaction";
 import Dashboard from "./DashBoard";
-import { SetNotification } from "./expense/set-notification";
+import { SetNotification } from "./expense/set-budget";
 import { Profile } from "./auth/profile";
 import { getUserDetails } from "@/api/userService";
 import { useQuery } from "@tanstack/react-query";
