@@ -4,6 +4,7 @@ import Signup from "./components/auth/sigin-up";
 import Sidebar from "./components/Sidebar";
 import { ProtectedRoute } from "./components/protected-route";
 import Cookies from "js-cookie";
+import ForgotPassword from "./components/auth/forgot-password";
 
 function App() {
   const token = Cookies.get("token");
@@ -19,6 +20,7 @@ function App() {
           path="/signup"
           element={token ? <Navigate to="/" /> : <Signup />}
         />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route element={<ProtectedRoute redirectPath="/login" />}>
           <Route path="/" element={<Sidebar />} />
