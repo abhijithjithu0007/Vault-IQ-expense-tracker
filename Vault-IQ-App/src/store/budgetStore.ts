@@ -1,45 +1,56 @@
-import { addBudgetApi } from "@/api/budgetService";
+import { addBudgetApi, deleteBudgetApi } from "@/api/budgetService";
 import { create } from "zustand";
 
 interface Budget {
-  error: {
-    addBudgetError: string | null;
-  };
-  loading: {
-    addBudgetLoad: boolean;
-  };
+  addBudgetError: string | null;
+  deleteBudgetError: string | null;
+
+  addBudgetLoad: boolean;
+  deleteBudgetLoad: boolean;
+
   addBudget: (
     category: string,
     amount: number
   ) => Promise<{ message: string; type: string }>;
+  deleteBudget: (id: number) => Promise<{ message: string; type: string }>;
   clearError: () => void;
 }
 
 export const useBudgetStore = create<Budget>((set) => ({
-  error: {
-    addBudgetError: null,
-  },
-  loading: {
-    addBudgetLoad: false,
-  },
+  addBudgetError: null,
+  deleteBudgetError: null,
+
+  addBudgetLoad: false,
+  deleteBudgetLoad: false,
+
   addBudget: async (category, amount) => {
     set({
-      loading: { addBudgetLoad: true },
-      error: { addBudgetError: null },
+      addBudgetLoad: true,
+      addBudgetError: null,
     });
     try {
       const data = await addBudgetApi(category, amount);
       set({
-        loading: { addBudgetLoad: false },
+        addBudgetLoad: false,
       });
       return { message: data.message, type: "success" };
     } catch (err: any) {
       set({
-        error: { addBudgetError: err.message || "Something went wrong" },
-        loading: { addBudgetLoad: false },
+        addBudgetError: err.message || "Something went wrong",
+        addBudgetLoad: false,
       });
       return { message: err.message, type: "error" };
     }
   },
-  clearError: () => set({ error: { addBudgetError: null } }),
+  deleteBudget: async (id) => {
+    set({ deleteBudgetLoad: true });
+    try {
+      const data = await deleteBudgetApi(id);
+      set({ deleteBudgetLoad: false });
+      return { message: data.message, type: "success" };
+    } catch (err: any) {
+      return { message: err.message, type: "error" };
+    }
+  },
+  clearError: () => set({ addBudgetError: null }),
 }));

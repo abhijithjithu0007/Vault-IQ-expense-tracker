@@ -8,3 +8,13 @@ export const addBudgetApi = async (category: string, amount: number) => {
 
   return res.data;
 };
+
+export const getBudgetApi = async () => {
+  const res = await axiosInstance.get("/budget/get-budget");
+  return res.data;
+};
+
+export const deleteBudgetApi = async (id: number) => {
+  const res = await axiosInstance.delete(`/budget/delete-budget/${id}`);
+  return res.data;
+};

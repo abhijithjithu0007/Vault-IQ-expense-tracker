@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
 import { IoNotificationsSharp } from "react-icons/io5";
 import { Category } from "./add-new";
 import { useQuery } from "@tanstack/react-query";
@@ -22,8 +23,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+
 import { useBudgetStore } from "@/store/budgetStore";
 import { useState } from "react";
+import { getBudgetApi } from "@/api/budgetService";
+import Showbudget from "./show-budget";
+
+export interface Budget {
+  data: [
+    {
+      id: number;
+      category: string;
+      amount: number;
+    }
+  ];
+}
 
 export function SetNotification() {
   const [category, setCategory] = useState<string>("");
@@ -42,6 +56,11 @@ export function SetNotification() {
     alert(message);
   };
 
+  const { data: budgetData } = useQuery<Budget, Error>({
+    queryKey: ["budget"],
+    queryFn: getBudgetApi,
+  });
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -58,7 +77,7 @@ export function SetNotification() {
             autoPlay
             loop
             muted
-            className="w-full h-[135px]"
+            className="w-full h-[110px]"
           />{" "}
         </SheetHeader>
         <SheetHeader>
@@ -98,13 +117,15 @@ export function SetNotification() {
             </Select>{" "}
           </div>
         </div>
-        <SheetFooter>
+        <SheetFooter className="pb-2">
           <SheetClose asChild>
             <Button onClick={handleSetBudget} type="submit">
               Add
             </Button>
           </SheetClose>
         </SheetFooter>
+        <hr />
+        {budgetData && <Showbudget budgetData={budgetData} />}
       </SheetContent>
     </Sheet>
   );
