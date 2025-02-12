@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import { ProtectedRoute } from "./components/protected-route";
 import Cookies from "js-cookie";
 import ForgotPassword from "./components/auth/forgot-password";
+import { ResetPassword } from "./components/auth/reset-password";
 
 function App() {
   const token = Cookies.get("token");
@@ -21,7 +22,7 @@ function App() {
           element={token ? <Navigate to="/" /> : <Signup />}
         />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route element={<ProtectedRoute redirectPath="/login" />}>
           <Route path="/" element={<Sidebar />} />
         </Route>
