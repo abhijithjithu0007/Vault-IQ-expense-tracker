@@ -14,8 +14,19 @@ import {
 } from "@/components/ui/card";
 import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import { Budget } from "./set-budget";
+import { useBudgetStore } from "@/store/budgetStore";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Showbudget({ budgetData }: { budgetData: Budget }) {
+  const deleteBudget = useBudgetStore((state) => state.deleteBudget);
+  const { refetch } = useQuery({
+    queryKey: ["budget"],
+  });
+  const handleDeleteBudget = async (id: number) => {
+    const { message } = await deleteBudget(id);
+    alert(message);
+    refetch();
+  };
   return (
     <div className="mt-3">
       <Card className="h-[200px] overflow-auto [&::-webkit-scrollbar]:hidden">
@@ -49,7 +60,10 @@ export default function Showbudget({ budgetData }: { budgetData: Budget }) {
                       <PiDotsThreeCircleVertical size={20} />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem className="text-red-500 font-semibold hover:cursor-pointer">
+                      <DropdownMenuItem
+                        onClick={() => handleDeleteBudget(item.id)}
+                        className="text-red-500 font-semibold hover:cursor-pointer"
+                      >
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

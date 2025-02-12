@@ -49,6 +49,10 @@ export const useBudgetStore = create<Budget>((set) => ({
       set({ deleteBudgetLoad: false });
       return { message: data.message, type: "success" };
     } catch (err: any) {
+      set({
+        deleteBudgetError: err.message || "Something went wrong",
+        deleteBudgetLoad: false,
+      });
       return { message: err.message, type: "error" };
     }
   },

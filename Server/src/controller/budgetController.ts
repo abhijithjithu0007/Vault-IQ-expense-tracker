@@ -3,6 +3,7 @@ import { prisma } from "../db/client";
 import { StandardResponse } from "../utils/standardResponse";
 import { CustomRequest } from "../types/interface";
 import { getOrSetCache } from "../utils/cache";
+import { redisClient } from "../db/redis";
 
 export const createBudget = async (req: CustomRequest, res: Response) => {
   const { category, amount } = req.body;
@@ -23,6 +24,7 @@ export const createBudget = async (req: CustomRequest, res: Response) => {
       },
     });
   }
+  await redisClient.del(`user_budget:${req.user?.id}`);
 
   res.status(200).json(new StandardResponse("Budget created"));
 };
@@ -47,6 +49,8 @@ export const deleteBudget = async (req: CustomRequest, res: Response) => {
   const deletedBudget = await prisma.budget.delete({
     where: { id: Number(id) },
   });
+
+  await redisClient.del(`user_budget:${req.user?.id}`);
 
   res.status(200).json(new StandardResponse("Budget deleted", deletedBudget));
 };

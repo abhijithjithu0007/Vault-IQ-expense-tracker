@@ -46,6 +46,11 @@ export function SetNotification() {
   const { data } = useQuery<Category, Error>({
     queryKey: ["categories"],
   });
+  const { data: budgetData, refetch } = useQuery<Budget, Error>({
+    queryKey: ["budget"],
+    queryFn: getBudgetApi,
+  });
+  console.log(budgetData);
 
   const filterCatagory = data?.data.categories
     .map((item) => item.name)
@@ -54,12 +59,8 @@ export function SetNotification() {
   const handleSetBudget = async () => {
     const { message } = await addBudget(category, amount!);
     alert(message);
+    refetch();
   };
-
-  const { data: budgetData } = useQuery<Budget, Error>({
-    queryKey: ["budget"],
-    queryFn: getBudgetApi,
-  });
 
   return (
     <Sheet>
