@@ -5,6 +5,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { CustomRequest } from "../types/interface";
 import { getOrSetCache } from "../utils/cache";
+import crypto from "crypto";
+import { transporter } from "../config/nodeMailerConfig";
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password, currency } = req.body;
@@ -65,4 +67,33 @@ export const getUser = async (req: CustomRequest, res: Response) => {
   });
 
   res.status(200).json(new StandardResponse("User details", user));
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    res.status(400).json(new StandardResponse("User not found", null));
+    return;
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+  await prisma.passwordResetToken.create({
+    data: {
+      token: resetToken,
+      userId: user.id,
+      expiresAt,
+    },
+  });
+
+  const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Password Reset Request",
+    html: `<p>Click the following link to reset your password:</p><a href="${resetLink}">${resetLink}</a>`,
+  });
 };

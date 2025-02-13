@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 export function Logout() {
   const navigate = useNavigate();
   const handleLogout = () => {
-    Cookies.remove("token");
     navigate("/login");
+    Cookies.remove("token");
   };
   return (
     <AlertDialog>

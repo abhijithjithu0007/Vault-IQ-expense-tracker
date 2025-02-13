@@ -20,7 +20,7 @@ export function Profile() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <p className="flex text-sm font-semibold items-center gap-3">
+        <p className="flex text-white/70 text-sm font-semibold items-center gap-3">
           <MdManageAccounts size={25} />
           Account
         </p>

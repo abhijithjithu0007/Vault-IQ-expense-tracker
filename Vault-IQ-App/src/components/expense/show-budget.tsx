@@ -36,7 +36,7 @@ export default function Showbudget({ budgetData }: { budgetData: Budget }) {
             Your current budget allocations
           </CardDescription>
         </CardHeader>
-        <CardContent className="">
+        <CardContent className="p-2 sm:p-5">
           <div className="space-y-1">
             {budgetData?.data.map((item) => (
               <div
@@ -45,9 +45,6 @@ export default function Showbudget({ budgetData }: { budgetData: Budget }) {
               >
                 <div className="flex flex-col">
                   <span className="font-medium text-sm">{item.category}</span>
-                  <span className="text-sm text-muted-foreground">
-                    Budget Limit
-                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold">

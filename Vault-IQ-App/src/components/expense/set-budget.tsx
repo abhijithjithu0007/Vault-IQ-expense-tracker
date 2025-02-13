@@ -50,7 +50,6 @@ export function SetNotification() {
     queryKey: ["budget"],
     queryFn: getBudgetApi,
   });
-  console.log(budgetData);
 
   const filterCatagory = data?.data.categories
     .map((item) => item.name)
@@ -65,7 +64,7 @@ export function SetNotification() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <p className="flex text-sm font-semibold items-center gap-3 ">
+        <p className="flex text-white/70 text-sm font-semibold items-center gap-3 ">
           <IoNotificationsSharp size={20} />
           Budget Plan
         </p>
@@ -100,12 +99,12 @@ export function SetNotification() {
               className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="flex justify-center items-center gap-4">
             <Label htmlFor="category" className="text-right">
               Category
             </Label>
             <Select onValueChange={setCategory}>
-              <SelectTrigger className="w-[250px]">
+              <SelectTrigger className="w-full sm:w-[250px]">
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent className="max-h-[250px] overflow-scroll scrollbar-thin scrollbar-none">

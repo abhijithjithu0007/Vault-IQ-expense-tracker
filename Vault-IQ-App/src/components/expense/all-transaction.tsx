@@ -58,16 +58,18 @@ export function Alltransaction() {
     searchValue?.data || filterItems?.data || data?.data || [];
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-3 sm:p-6 max-w-6xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl p-4 font-bold">All transactions</h1>
+        <h1 className="text-2xl p-4 font-bold text-center sm:text-start">
+          All transactions
+        </h1>
         <div className="flex gap-2">
           <div className="relative flex-grow">
             <Input
               type="text"
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search Transaction"
-              className="bg-white w-[400px] px-4 py-2 pl-10 border rounded-lg"
+              className="bg-white w-[170px] sm:w-[250px] px-4 py-2 pl-10 border rounded-lg"
             />
             <Search
               className="absolute left-3 top-2.5 text-gray-400"
