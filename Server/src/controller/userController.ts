@@ -96,4 +96,39 @@ export const forgotPassword = async (req: Request, res: Response) => {
     subject: "Password Reset Request",
     html: `<p>Click the following link to reset your password:</p><a href="${resetLink}">${resetLink}</a>`,
   });
+  res.status(200).json(new StandardResponse("Password reset link sent", null));
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const { token, newPassword } = req.body;
+
+  const passwordResetToken = await prisma.passwordResetToken.findUnique({
+    where: { token },
+    include: { user: true },
+  });
+
+  if (!passwordResetToken) {
+    res.status(400).json(new StandardResponse("Invalid token", null));
+    return;
+  }
+
+  if (passwordResetToken.expiresAt < new Date()) {
+    res.status(400).json(new StandardResponse("Token expired", null));
+    return;
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await prisma.user.update({
+    where: { id: passwordResetToken.user.id },
+    data: { password: hashedPassword },
+  });
+
+  await prisma.passwordResetToken.delete({
+    where: { id: passwordResetToken.id },
+  });
+
+  res
+    .status(200)
+    .json(new StandardResponse("Password reset successfully", null));
 };
