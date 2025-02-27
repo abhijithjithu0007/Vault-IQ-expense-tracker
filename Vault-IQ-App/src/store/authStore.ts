@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { loginUser, registerUser } from "../api/authService";
+import {
+  forgotPasswordApi,
+  loginUser,
+  registerUser,
+  resetPasswordApi,
+} from "../api/authService";
 
 interface AuthState {
   user: string | null;
@@ -16,6 +21,13 @@ interface AuthState {
     email: string,
     password: string,
     currency: string
+  ) => Promise<{ message: string; type: string }>;
+  forgotPassword: (
+    email: string
+  ) => Promise<{ message: string; type: string; status: number }>;
+  resetPassword: (
+    password: string,
+    token: string
   ) => Promise<{ message: string; type: string }>;
   clearError: () => void;
 }
@@ -58,5 +70,31 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
+  forgotPassword: async (email) => {
+    set({ loading: true, error: null });
+    try {
+      const data = await forgotPasswordApi(email);
+      set({ loading: false });
+      return {
+        message: data.message,
+        type: "success",
+        status: data.statusCode,
+      };
+    } catch (err: any) {
+      set({ error: err.message || "Something went wrong", loading: false });
+      return { message: err.message, type: "error", status: 500 };
+    }
+  },
+  resetPassword: async (password, token) => {
+    set({ loading: true, error: null });
+    try {
+      const data = await resetPasswordApi(password, token);
+      set({ loading: false });
+      return { message: data.message, type: "success" };
+    } catch (err: any) {
+      set({ error: err.message || "Something went wrong", loading: false });
+      return { message: err.message, type: "error" };
+    }
+  },
   clearError: () => set({ error: null }),
 }));

@@ -1,8 +1,17 @@
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useAuthStore } from "@/store/authStore";
+import { Link } from "react-router-dom";
 
-const ForgotPassword = () => {
+export const ForgotPassword = () => {
+  const [email, setEmail] = useState<string>("");
+  const ForgotPassword = useAuthStore((state) => state.forgotPassword);
+  const handleEmail = async () => {
+    const { message, status } = await ForgotPassword(email);
+    alert(message);
+  };
   return (
     <main className="mx-auto p-6 h-screen  flex items-center justify-center">
       <div className="mt-7 bg-white rounded-xl shadow-xl  border-2 border-indigo-300">
@@ -23,25 +32,33 @@ const ForgotPassword = () => {
           </div>
 
           <div className="mt-3 p-3">
-            <form>
-              <div className="grid gap-y-4">
-                <Label>Email</Label>
-                <Input type="email" className="w-full border border-black" />
-              </div>
-              <div className="flex justify-center items-center mt-3">
-                <Button
-                  type="submit"
-                  className="py-2 px-2 gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                >
-                  Reset password
-                </Button>
-              </div>
-            </form>
+            <div className="grid gap-y-4">
+              <Label>Email</Label>
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                className="w-full border border-black"
+              />
+            </div>
+            <div className="flex justify-center items-center mt-3">
+              <Button
+                type="submit"
+                onClick={handleEmail}
+                className="py-2 px-2 gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm"
+              >
+                Reset password
+              </Button>
+            </div>
+            <div className="flex mt-4 justify-center text-xs">
+              <Link to={"/login"}>
+                <p className="text-black hover:text-blue-500 hover:cursor-pointer hover:underline">
+                  Remember it
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </main>
   );
 };
-
-export default ForgotPassword;

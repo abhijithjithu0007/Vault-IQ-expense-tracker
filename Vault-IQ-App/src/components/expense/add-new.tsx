@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Notify } from "notiflix";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -53,13 +54,17 @@ export function Addnew() {
   });
   const handleAddTransaction = async () => {
     if (currentTransaction === "Expense") {
-      const { message, type } = await addExpense(
+      const { message, type, isExceedBudget } = await addExpense(
         category,
         amount!,
         "",
         description
       );
-      alert(message);
+      if (isExceedBudget) {
+        Notify.warning("Warning: You have exceeded your budget limit!");
+      } else {
+        Notify.success(message);
+      }
       refetch();
       refetchUser();
     }

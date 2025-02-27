@@ -23,7 +23,7 @@ interface Expense {
     amount: number,
     bill: string,
     description: string
-  ) => Promise<{ message: string; type: string }>;
+  ) => Promise<{ message: string; type: string; isExceedBudget?: boolean }>;
   addIncome: (amount: number) => Promise<{ message: string; type: string }>;
   deleteExpense: (id: number) => Promise<{ message: string; type: string }>;
   updateExpense: (
@@ -49,6 +49,7 @@ export const useExpenseStore = create<Expense>((set) => ({
   loading: {
     addExpenseLoad: false,
   },
+
   addExpense: async (category, amount, bill, description) => {
     set({
       loading: { addExpenseLoad: true },
@@ -56,14 +57,11 @@ export const useExpenseStore = create<Expense>((set) => ({
     });
     try {
       const data = await addExpense(category, amount, bill, description);
-      set({
-        id: data.data.id,
-        category: data.data.category,
-        amount: data.data.amount,
-        description: data.data.description,
-        loading: { addExpenseLoad: false },
-      });
-      return { message: data.message, type: "success" };
+      return {
+        message: data.message,
+        type: "success",
+        isExceedBudget: data.data.isExceeded,
+      };
     } catch (err: any) {
       set({
         error: { addExpenseError: err.message || "Something went wrong" },

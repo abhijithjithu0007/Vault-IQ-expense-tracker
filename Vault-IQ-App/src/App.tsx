@@ -4,8 +4,8 @@ import Signup from "./components/auth/sigin-up";
 import Sidebar from "./components/Sidebar";
 import { ProtectedRoute } from "./components/protected-route";
 import Cookies from "js-cookie";
-import ForgotPassword from "./components/auth/forgot-password";
 import { ResetPassword } from "./components/auth/reset-password";
+import { ForgotPassword } from "./components/auth/forgot-password";
 
 function App() {
   const token = Cookies.get("token");

@@ -53,6 +53,13 @@ export default function Login() {
             </p>
           </Link>
         </div>
+        <div className="flex mt-4 justify-center text-xs">
+          <Link to={"/forgot-password"}>
+            <p className="text-black hover:text-blue-500 hover:cursor-pointer hover:underline">
+              Forgot Password
+            </p>
+          </Link>
+        </div>
       </form>
     </div>
   );

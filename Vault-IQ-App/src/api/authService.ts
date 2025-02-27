@@ -32,3 +32,16 @@ export const registerUser = async (
   });
   return data;
 };
+
+export const forgotPasswordApi = async (email: string) => {
+  const res = await axiosInstance.post("/user/forgot-password", { email });
+  return res.data;
+};
+
+export const resetPasswordApi = async (password: string, token: string) => {
+  const res = await axiosInstance.post("/user/reset-password", {
+    token: token,
+    newPassword: password,
+  });
+  return res.data;
+};
