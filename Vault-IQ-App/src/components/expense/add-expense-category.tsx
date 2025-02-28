@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { useExpenseStore } from "@/store/expenseStore";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Notify } from "notiflix";
 
 export default function Addexpensecategory() {
   const { refetch } = useQuery({
@@ -16,9 +17,13 @@ export default function Addexpensecategory() {
   );
 
   const handleAddExpenseCategory = async () => {
-    const { message } = await addExpenseCategory(name);
-    alert(message);
-    refetch();
+    const { message, type } = await addExpenseCategory(name);
+    if (type === "success") {
+      refetch();
+      Notify.success(message);
+    } else {
+      Notify.failure(message);
+    }
   };
   return (
     <Dialog>

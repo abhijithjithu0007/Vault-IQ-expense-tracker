@@ -40,9 +40,8 @@ export interface Category {
 export function Addnew() {
   const [currentTransaction, setCurrentTransaction] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [amount, setAmount] = useState<number | undefined>();
+  const [amount, setAmount] = useState<number | undefined>(0);
   const [description, setDescription] = useState<string>("");
-
   const addExpense = useExpenseStore((state) => state.addExpense);
   const addIncome = useExpenseStore((state) => state.addIncome);
 
@@ -60,18 +59,34 @@ export function Addnew() {
         "",
         description
       );
-      if (isExceedBudget) {
-        Notify.warning("Warning: You have exceeded your budget limit!");
+      if (type === "success") {
+        setAmount(0);
+        setDescription("");
+        setCategory("");
+        if (isExceedBudget) {
+          Notify.warning("Warning: You have exceeded your budget limit!");
+        } else {
+          Notify.success(message);
+        }
       } else {
-        Notify.success(message);
+        Notify.failure(message);
       }
+
       refetch();
       refetchUser();
     }
 
     if (currentTransaction === "Income") {
       const { message, type } = await addIncome(amount!);
-      alert(message);
+
+      if (type === "success") {
+        setAmount(0);
+        setDescription("");
+        setCategory("");
+        Notify.success(message);
+      } else {
+        Notify.failure(message);
+      }
       refetchUser();
     }
   };

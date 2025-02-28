@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, FileText } from "lucide-react";
 import { Expense } from "./transaction-history";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -21,6 +21,9 @@ import Updateexpense from "./update-expense";
 import CategoryIcon from "../category-icon";
 import { filterExpenses, searchExpenses } from "@/api/expenseService";
 import { useEffect, useState } from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"; // Import autoTable properly
+import { Button } from "../ui/button";
 
 let debounceTimer: NodeJS.Timeout;
 
@@ -43,6 +46,46 @@ export function Alltransaction() {
     } else {
       setSearchValue(null);
     }
+  };
+
+  const handleDownloadPDF = () => {
+    if (!data || !data.data) return;
+
+    const doc = new jsPDF();
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+
+    const marginX = 10;
+    const marginY = 10;
+    const pageWidth = doc.internal.pageSize.width - 2 * marginX;
+
+    let y = marginY + 10;
+
+    doc.text("Expense Report", pageWidth / 2, y, { align: "center" });
+    y += 10;
+
+    const headers = [["Category", "Amount", "Date", "Time"]];
+
+    const tableData = data.data.map((item: any) => [
+      item.category,
+      item.amount,
+      new Date(item.date).toLocaleDateString(),
+      new Date(item.date).toLocaleTimeString(),
+    ]);
+
+    autoTable(doc, {
+      head: headers,
+      body: tableData,
+      startY: y,
+      theme: "grid",
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [22, 160, 133] },
+      columnStyles: {
+        1: { halign: "right" },
+      },
+    });
+
+    doc.save("expense_report.pdf");
   };
 
   useEffect(() => {
@@ -69,18 +112,22 @@ export function Alltransaction() {
               type="text"
               onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search Transaction"
-              className="bg-white w-[170px] sm:w-[250px] px-4 py-2 pl-10 border rounded-lg"
+              className="bg-white w-[170px] sm:w-[250px] px-4 py-2 pl-10 border rounded-lg placeholder:text-sm sm:placeholder:text-base"
             />
             <Search
               className="absolute left-3 top-2.5 text-gray-400"
               size={18}
             />
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-5">
+            <Button className="bg-red-400" onClick={handleDownloadPDF}>
+              <FileText size={18} />
+              <span className="hidden sm:inline">Download PDF</span>{" "}
+            </Button>
             <Select onValueChange={setFilterVal}>
-              <SelectTrigger className="w-[125px] bg-white">
+              <SelectTrigger className="w-16 sm:w-[125px] bg-white">
                 <Filter size={18} />
-                Filter{" "}
+                <p className="hidden sm:block">Filter </p>
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>

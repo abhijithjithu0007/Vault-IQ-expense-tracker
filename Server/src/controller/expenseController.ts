@@ -34,7 +34,6 @@ export const getExpenses = async (req: CustomRequest, res: Response) => {
 export const addExpense = async (req: CustomRequest, res: Response) => {
   const parsedData = expenseSchema.parse(req.body);
   const { category, amount, description } = parsedData;
-
   const budget = await prisma.budget.findFirst({
     where: { userId: req.user!.id, category },
   });

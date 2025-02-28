@@ -1,5 +1,6 @@
 import { SelectCurrency } from "@/components/auth/select-currency";
 import { useAuthStore } from "@/store/authStore";
+import { Notify } from "notiflix";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,8 +16,12 @@ export default function Signup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await register(name, email, password, currency);
-    alert(response.message);
-    if (response.type === "success") navigate("/");
+    if (response.type === "success") {
+      Notify.success(response.message);
+      navigate("/");
+    } else {
+      Notify.failure(response.message);
+    }
   };
 
   return (

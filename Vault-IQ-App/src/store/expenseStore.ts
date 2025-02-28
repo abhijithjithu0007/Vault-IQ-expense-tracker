@@ -67,7 +67,7 @@ export const useExpenseStore = create<Expense>((set) => ({
         error: { addExpenseError: err.message || "Something went wrong" },
         loading: { addExpenseLoad: false },
       });
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   addIncome: async (amount) => {
@@ -75,7 +75,7 @@ export const useExpenseStore = create<Expense>((set) => ({
       const data = await addUserIncome(amount);
       return { message: data.message, type: "success" };
     } catch (err: any) {
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   deleteExpense: async (id) => {
@@ -83,7 +83,7 @@ export const useExpenseStore = create<Expense>((set) => ({
       const data = await deleteExpense(id);
       return { message: data.message, type: "success" };
     } catch (err: any) {
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   updateExpense: async (id, category, amount, description) => {
@@ -91,7 +91,7 @@ export const useExpenseStore = create<Expense>((set) => ({
       const data = await updateExpense(id, category, amount, description);
       return { message: data.message, type: "success" };
     } catch (err: any) {
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   addExpenseCategory: async (name) => {
@@ -99,7 +99,7 @@ export const useExpenseStore = create<Expense>((set) => ({
       const data = await addCategory(name);
       return { message: data.message, type: "success" };
     } catch (err: any) {
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   clearError: () => set({ error: { addExpenseError: null } }),

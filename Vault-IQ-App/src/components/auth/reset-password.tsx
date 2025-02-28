@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Lock } from "lucide-react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -115,9 +115,9 @@ export const ResetPassword = () => {
           </form>
 
           <div className="mt-4 text-center">
-            <a href="#" className="text-sm text-blue-600">
+            <Link to="/login" className="text-sm text-blue-600">
               Back to Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useExpenseStore } from "@/store/expenseStore";
 import { useQuery } from "@tanstack/react-query";
+import { Notify } from "notiflix";
 
 export function DeleteExpense({ expenseId }: { expenseId: number }) {
   const deleteUserExpense = useExpenseStore((state) => state.deleteExpense);
@@ -19,9 +20,14 @@ export function DeleteExpense({ expenseId }: { expenseId: number }) {
   });
   const handleDeleteUserExpense = async () => {
     const { message, type } = await deleteUserExpense(expenseId);
-    alert(message);
-    refetch();
+    if (type === "success") {
+      refetch();
+      Notify.success(message);
+    } else {
+      Notify.failure(message);
+    }
   };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger>

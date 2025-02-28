@@ -22,9 +22,7 @@ interface AuthState {
     password: string,
     currency: string
   ) => Promise<{ message: string; type: string }>;
-  forgotPassword: (
-    email: string
-  ) => Promise<{ message: string; type: string; status: number }>;
+  forgotPassword: (email: string) => Promise<{ message: string; type: string }>;
   resetPassword: (
     password: string,
     token: string
@@ -50,7 +48,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       return { message: data.message, type: "success" };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
 
@@ -66,7 +64,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       return { message: data.message, type: "success" };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
 
@@ -78,11 +76,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       return {
         message: data.message,
         type: "success",
-        status: data.statusCode,
       };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
-      return { message: err.message, type: "error", status: 500 };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   resetPassword: async (password, token) => {
@@ -90,10 +87,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const data = await resetPasswordApi(password, token);
       set({ loading: false });
+      console.log(data);
+
       return { message: data.message, type: "success" };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
-      return { message: err.message, type: "error" };
+      console.log(err);
+
+      return { message: err.response.data.message, type: "error" };
     }
   },
   clearError: () => set({ error: null }),

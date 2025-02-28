@@ -16,6 +16,7 @@ import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import { Budget } from "./set-budget";
 import { useBudgetStore } from "@/store/budgetStore";
 import { useQuery } from "@tanstack/react-query";
+import { Notify } from "notiflix";
 
 export default function Showbudget({ budgetData }: { budgetData: Budget }) {
   const deleteBudget = useBudgetStore((state) => state.deleteBudget);
@@ -23,8 +24,12 @@ export default function Showbudget({ budgetData }: { budgetData: Budget }) {
     queryKey: ["budget"],
   });
   const handleDeleteBudget = async (id: number) => {
-    const { message } = await deleteBudget(id);
-    alert(message);
+    const { message, type } = await deleteBudget(id);
+    if (type === "success") {
+      Notify.success(message);
+    } else {
+      Notify.failure(message);
+    }
     refetch();
   };
   return (

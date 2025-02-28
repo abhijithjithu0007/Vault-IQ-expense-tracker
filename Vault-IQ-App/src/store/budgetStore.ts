@@ -39,7 +39,7 @@ export const useBudgetStore = create<Budget>((set) => ({
         addBudgetError: err.message || "Something went wrong",
         addBudgetLoad: false,
       });
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   deleteBudget: async (id) => {
@@ -53,7 +53,7 @@ export const useBudgetStore = create<Budget>((set) => ({
         deleteBudgetError: err.message || "Something went wrong",
         deleteBudgetLoad: false,
       });
-      return { message: err.message, type: "error" };
+      return { message: err.response.data.message, type: "error" };
     }
   },
   clearError: () => set({ addBudgetError: null }),

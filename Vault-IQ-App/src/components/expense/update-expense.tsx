@@ -22,6 +22,7 @@ import Addexpensecategory from "./add-expense-category";
 import { Textarea } from "../ui/textarea";
 import { useExpenseStore } from "@/store/expenseStore";
 import { useQuery } from "@tanstack/react-query";
+import { Notify } from "notiflix";
 
 interface Props {
   id: number;
@@ -46,15 +47,19 @@ export default function Updateexpense({ expense }: { expense: Props }) {
   });
 
   const handleUpdateExpense = async () => {
-    const { message } = await updateExpense(
+    const { message, type } = await updateExpense(
       expense.id,
       category,
       amount,
       description
     );
-    alert(message);
-    refetch();
-    refetchUser();
+    if (type === "success") {
+      Notify.success(message);
+      refetch();
+      refetchUser();
+    } else {
+      Notify.failure(message);
+    }
   };
 
   return (

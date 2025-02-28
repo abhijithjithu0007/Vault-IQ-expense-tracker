@@ -1,4 +1,5 @@
 import { useAuthStore } from "@/store/authStore";
+import { Notify } from "notiflix";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,8 +13,12 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await login(email, password);
-    alert(response.message);
-    if (response.type === "success") navigate("/");
+    if (response.type === "success") {
+      Notify.success(response.message);
+      navigate("/");
+    } else {
+      Notify.failure(response.message);
+    }
   };
 
   return (

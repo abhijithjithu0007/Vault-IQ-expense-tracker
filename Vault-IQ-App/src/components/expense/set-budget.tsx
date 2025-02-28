@@ -28,6 +28,8 @@ import { useBudgetStore } from "@/store/budgetStore";
 import { useState } from "react";
 import { getBudgetApi } from "@/api/budgetService";
 import Showbudget from "./show-budget";
+import { Notify } from "notiflix";
+import { getCategories } from "@/api/expenseService";
 
 export interface Budget {
   data: [
@@ -45,6 +47,7 @@ export function SetNotification() {
   const addBudget = useBudgetStore((state) => state.addBudget);
   const { data } = useQuery<Category, Error>({
     queryKey: ["categories"],
+    queryFn: getCategories,
   });
   const { data: budgetData, refetch } = useQuery<Budget, Error>({
     queryKey: ["budget"],
@@ -56,8 +59,12 @@ export function SetNotification() {
     .concat(data?.data.defaultCategories);
 
   const handleSetBudget = async () => {
-    const { message } = await addBudget(category, amount!);
-    alert(message);
+    const { message, type } = await addBudget(category, amount!);
+    if (type === "success") {
+      Notify.success(message);
+    } else {
+      Notify.failure(message);
+    }
     refetch();
   };
 

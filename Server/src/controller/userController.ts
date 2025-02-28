@@ -79,7 +79,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
   }
 
   const resetToken = crypto.randomBytes(32).toString("hex");
-  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
   await prisma.passwordResetToken.create({
     data: {
@@ -89,7 +89,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     },
   });
 
-  const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
+  const resetLink = `${process.env.PASSWORD_RESET_URL}token=${resetToken}`;
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: email,

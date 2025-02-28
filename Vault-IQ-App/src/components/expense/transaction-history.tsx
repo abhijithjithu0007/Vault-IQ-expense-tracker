@@ -22,7 +22,7 @@ export const RecentTransactions = () => {
   const limitedData = data?.data.slice(0, 3);
 
   return (
-    <div className="max-w-4xl h-[290px] mx-auto bg-white overflow-auto [&::-webkit-scrollbar]:hidden scrollbar-thin scrollbar-none">
+    <div className="max-w-5xl h-[290px] mx-auto bg-white overflow-auto [&::-webkit-scrollbar]:hidden scrollbar-thin scrollbar-none">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-800">Recent Expenses</h2>
       </div>

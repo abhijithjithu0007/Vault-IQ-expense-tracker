@@ -4,13 +4,18 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useAuthStore } from "@/store/authStore";
 import { Link } from "react-router-dom";
+import { Notify } from "notiflix";
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState<string>("");
   const ForgotPassword = useAuthStore((state) => state.forgotPassword);
   const handleEmail = async () => {
-    const { message, status } = await ForgotPassword(email);
-    alert(message);
+    const { message, type } = await ForgotPassword(email);
+    if (type === "success") {
+      Notify.success(message);
+    } else {
+      Notify.failure(message);
+    }
   };
   return (
     <main className="mx-auto p-6 h-screen  flex items-center justify-center">
