@@ -40,7 +40,7 @@ const Sidebar = () => {
   }, []);
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full w-full p-5">
+    <div className="flex flex-col h-full w-full p-8">
       <div className="p-4 text-center">
         <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-white/20 flex items-center justify-center">
           <span className="text-xl text-white font-bold">
