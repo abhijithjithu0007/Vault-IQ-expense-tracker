@@ -4,7 +4,6 @@ import { StandardResponse } from "../utils/standardResponse";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { CustomRequest } from "../types/interface";
-import { getOrSetCache } from "../utils/cache";
 import crypto from "crypto";
 import { transporter } from "../config/nodeMailerConfig";
 
@@ -60,11 +59,7 @@ export const login = async (req: Request, res: Response) => {
 export const getUser = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
 
-  const cacheKey = `user_details:${userId}`;
-
-  const user = await getOrSetCache(cacheKey, 3600, async () => {
-    return await prisma.user.findUnique({ where: { id: userId } });
-  });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   res.status(200).json(new StandardResponse("User details", user));
 };

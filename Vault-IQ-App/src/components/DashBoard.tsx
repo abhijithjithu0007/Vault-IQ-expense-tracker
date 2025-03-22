@@ -41,14 +41,10 @@ const Dashboard = ({ user }: { user: User }) => {
             <Addnew />
           </div>
         </div>
-
-        {/* Chart Section */}
         <div className="bg-white w-full md:w-1/2 shadow-md rounded-lg flex justify-center items-center">
           <ChartSquare user={user} />
         </div>
       </div>
-
-      {/* Recent Transactions Section */}
       <div className="bg-white p-3 sm:p-6 shadow-md rounded-lg mt-6">
         <RecentTransactions />
       </div>

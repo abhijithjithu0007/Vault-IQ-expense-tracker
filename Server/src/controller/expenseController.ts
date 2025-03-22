@@ -3,8 +3,6 @@ import { prisma } from "../db/client";
 import { expenseSchema } from "../utils/validation";
 import { StandardResponse } from "../utils/standardResponse";
 import { CustomRequest } from "../types/interface";
-import { redisClient } from "../db/redis";
-import { getOrSetCache } from "../utils/cache";
 
 export const addUserIncome = async (req: CustomRequest, res: Response) => {
   const { amount } = req.body;
@@ -13,19 +11,15 @@ export const addUserIncome = async (req: CustomRequest, res: Response) => {
     where: { id: req.user!.id },
     data: { totalAmount: { increment: amount } },
   });
-
-  await redisClient.del(`user_details:${req.user?.id}`);
   res.status(200).json(new StandardResponse("Income added", addincome));
 };
 export const getExpenses = async (req: CustomRequest, res: Response) => {
   const userId = req.user?.id;
   const cacheKey = `user_expenses:${userId}`;
 
-  const expenses = await getOrSetCache(cacheKey, 3600, async () => {
-    return await prisma.expense.findMany({
-      where: { userId },
-      orderBy: { date: "desc" },
-    });
+  const expenses = await prisma.expense.findMany({
+    where: { userId },
+    orderBy: { date: "desc" },
   });
 
   res.status(200).json(new StandardResponse("Expenses retrieved", expenses));
@@ -69,9 +63,6 @@ export const addExpense = async (req: CustomRequest, res: Response) => {
     },
   });
 
-  await redisClient.del(`user_expenses:${req.user?.id}`);
-  await redisClient.del(`user_details:${req.user?.id}`);
-
   res
     .status(201)
     .json(new StandardResponse("Expense added", { expense, isExceeded }));
@@ -93,8 +84,6 @@ export const deleteExpense = async (req: CustomRequest, res: Response) => {
     },
   });
 
-  await redisClient.del(`user_expenses:${req.user?.id}`);
-  await redisClient.del(`user_details:${req.user?.id}`);
   res.status(200).json(new StandardResponse("Expense deleted", deletedExpense));
 };
 
@@ -119,8 +108,6 @@ export const updateExpense = async (req: CustomRequest, res: Response) => {
       currentExpense: { increment: difference },
     },
   });
-  await redisClient.del(`user_expenses:${req.user?.id}`);
-  await redisClient.del(`user_details:${req.user?.id}`);
 
   res.status(200).json(new StandardResponse("Expense updated", updatedExpense));
 };
@@ -138,7 +125,6 @@ export const addCategory = async (req: CustomRequest, res: Response) => {
       userId: userId,
     },
   });
-  await redisClient.del(`user_category:${userId}`);
   res.status(201).json(new StandardResponse("Category added", category));
 };
 
@@ -150,10 +136,8 @@ export const getCategory = async (req: CustomRequest, res: Response) => {
   }
   const cacheKey = `user_category:${userId}`;
 
-  const categories = await getOrSetCache(cacheKey, 3600, async () => {
-    return await prisma.category.findMany({
-      where: { userId: userId },
-    });
+  const categories = await prisma.category.findMany({
+    where: { userId: userId },
   });
 
   const defaultCategories = [
