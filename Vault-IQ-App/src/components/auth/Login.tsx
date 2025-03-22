@@ -15,7 +15,7 @@ export default function Login() {
     const response = await login(email, password);
     if (response.type === "success") {
       Notify.success(response.message);
-      navigate("/");
+      navigate("/home");
     } else {
       Notify.failure(response.message);
     }

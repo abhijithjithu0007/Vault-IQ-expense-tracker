@@ -24,7 +24,7 @@ import { Textarea } from "../ui/textarea";
 import { useExpenseStore } from "@/store/expenseStore";
 import { useQuery } from "@tanstack/react-query";
 import { getCategories } from "@/api/expenseService";
-
+import { useNavigate } from "react-router-dom";
 export interface Category {
   data: {
     categories: [
@@ -51,6 +51,7 @@ export function Addnew() {
   const { refetch: refetchUser } = useQuery({
     queryKey: ["userProfile"],
   });
+  const navigate = useNavigate();
   const handleAddTransaction = async () => {
     if (currentTransaction === "Expense") {
       const { message, type, isExceedBudget } = await addExpense(
@@ -68,6 +69,7 @@ export function Addnew() {
         } else {
           Notify.success(message);
         }
+        navigate("/home");
       } else {
         Notify.failure(message);
       }
@@ -84,6 +86,7 @@ export function Addnew() {
         setDescription("");
         setCategory("");
         Notify.success(message);
+        navigate("/home");
       } else {
         Notify.failure(message);
       }

@@ -21,7 +21,10 @@ interface AuthState {
     email: string,
     password: string,
     currency: string
-  ) => Promise<{ message: string; type: string }>;
+  ) => Promise<{
+    message: string;
+    type: string;
+  }>;
   forgotPassword: (email: string) => Promise<{ message: string; type: string }>;
   resetPassword: (
     password: string,
@@ -56,15 +59,23 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ loading: true, error: null });
     try {
       const data = await registerUser(name, email, password, currency);
+      console.log(data);
+
       set({
         user: data.data.token,
         status: data.statusCode,
         loading: false,
       });
-      return { message: data.message, type: "success" };
+      return {
+        message: data.message,
+        type: "success",
+      };
     } catch (err: any) {
       set({ error: err.message || "Something went wrong", loading: false });
-      return { message: err.response.data.message, type: "error" };
+      return {
+        message: err.response.data.message,
+        type: "error",
+      };
     }
   },
 

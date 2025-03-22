@@ -5,10 +5,12 @@ export const loginUser = async (email: string, password: string) => {
   const res = await axiosInstance.post("/user/login", { email, password });
 
   const data = res.data;
-  Cookies.set("token", data.data.token, {
-    expires: new Date(Date.now() + 86400000),
-    secure: true,
-  });
+  console.log(data);
+
+  // Cookies.set("token", data.data.token, {
+  //   expires: new Date(Date.now() + 86400000),
+  //   secure: true,
+  // });
   return data;
 };
 

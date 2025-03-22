@@ -16,9 +16,10 @@ export default function Signup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await register(name, email, password, currency);
+
     if (response.type === "success") {
       Notify.success(response.message);
-      navigate("/");
+      navigate("/welcome");
     } else {
       Notify.failure(response.message);
     }
